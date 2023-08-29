@@ -29,9 +29,12 @@ const Category = styled.div`
   flex-direction: column;
   align-items: center;
   border-radius: 10px;
+  transition-duration: 100ms;
+  transition-timing-function: ease-out;
   cursor: pointer;
   &:hover {
     box-shadow: 2px 2px 10px gray;
+    transform: scale(1.05);
   }
 `;
 const CategoryName = styled.span`

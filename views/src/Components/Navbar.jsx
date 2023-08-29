@@ -97,9 +97,8 @@ const Popover = styled.div`
   width: 8rem;
   height: ${(props) => (props.show ? "3rem" : "0rem")};
   color: white;
-  overflow: hidden;
   transition-timing-function: ease-out;
-  transition-duration: 300ms;
+  transition-duration: 100ms;
   padding: ${(props) => (props.show ? "1rem" : "0rem")};
   display: flex;
   margin: 1rem;
@@ -114,6 +113,7 @@ const Popover = styled.div`
     border-right: 1rem solid transparent;
     top: -1.6rem;
     right: 0;
+    display: ${(props) => (props.show ? "block" : "none")};
   }
 `;
 
