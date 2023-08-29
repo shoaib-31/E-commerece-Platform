@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import User from "../../public/User";
 import Cart from "../../public/Cart";
-import { FaAngleUp } from "react-icons/fa6";
+import { FaAngleUp, FaGear, FaPowerOff } from "react-icons/fa6";
 
 const Navbar = () => {
   const [isPopover, setIsPopover] = useState(false);
@@ -26,8 +26,18 @@ const Navbar = () => {
               <FaAngleUp />
             </Arrow>
             <Popover show={isPopover}>
-              <PopItem>Setting</PopItem>
-              <PopItem>Log Out</PopItem>
+              <PopItem show={isPopover}>
+                <span>
+                  <FaGear />
+                </span>{" "}
+                Settings
+              </PopItem>
+              <PopItem show={isPopover}>
+                <span>
+                  <FaPowerOff />
+                </span>{" "}
+                Log Out
+              </PopItem>
             </Popover>
           </Profile>
 
@@ -60,6 +70,7 @@ const CartNav = styled.div`
   font-size: 1.1rem;
   gap: 7px;
   align-items: center;
+  cursor: pointer;
 `;
 const Profile = styled.div`
   position: relative;
@@ -72,6 +83,10 @@ const Profile = styled.div`
 const PopItem = styled(Link)`
   text-decoration: none;
   color: white;
+  display: ${(props) => (props.show ? "block" : "none")};
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 const Popover = styled.div`
   position: absolute;
@@ -80,10 +95,15 @@ const Popover = styled.div`
   border-radius: 5px;
   top: 3rem;
   width: 8rem;
+  height: ${(props) => (props.show ? "3rem" : "0rem")};
   color: white;
-  padding: 1rem;
-  display: ${(props) => (props.show ? "flex" : "none")};
+  overflow: hidden;
+  transition-timing-function: ease-out;
+  transition-duration: 300ms;
+  padding: ${(props) => (props.show ? "1rem" : "0rem")};
+  display: flex;
   margin: 1rem;
+  z-index: 2;
   flex-direction: column;
   &::after {
     content: "";
@@ -101,7 +121,7 @@ const NavbarContainer = styled.nav`
   background-color: black;
   color: white;
   display: flex;
-  height: 4rem;
+  height: 2rem;
   width: 1650px;
   justify-content: space-between;
   align-items: center;
@@ -150,8 +170,5 @@ const StyledLink = styled(Link)`
   text-decoration: none;
   font-size: 1.2rem;
   position: relative;
-  &:hover {
-    text-decoration: underline;
-  }
 `;
 export default Navbar;

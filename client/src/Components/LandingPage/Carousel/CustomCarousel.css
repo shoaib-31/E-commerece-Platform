@@ -1,0 +1,32 @@
+.slick-prev,
+.slick-next {
+  z-index: 1;
+}
+.slick-next::before,
+.slick-prev::before {
+  content: "";
+}
+
+.slick-prev {
+  left: 5rem;
+}
+.slick-next {
+  right: 5rem;
+}
+.slick-slider {
+  width: 90%;
+  overflow: visible;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slick-slide {
+  transition-timing-function: ease-in;
+  transition-duration: 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 1650;
+  height: 15rem;
+}
