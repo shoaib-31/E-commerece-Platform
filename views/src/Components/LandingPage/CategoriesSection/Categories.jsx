@@ -65,7 +65,7 @@ const Container = styled.div`
 const CategoriesBox = styled.div`
   display: flex;
   align-items: center;
-  width: 92%;
+  width: 85%;
   flex-wrap: wrap;
   justify-content: space-between;
 `;

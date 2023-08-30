@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import User from "../../public/User";
-import Cart from "../../public/Cart";
-import { FaAngleUp, FaGear, FaPowerOff } from "react-icons/fa6";
+import {
+  FaAngleUp,
+  FaCartShopping,
+  FaGear,
+  FaPowerOff,
+  FaUser,
+  FaMagnifyingGlass,
+} from "react-icons/fa6";
 
 const Navbar = () => {
   const [isPopover, setIsPopover] = useState(false);
@@ -11,16 +16,19 @@ const Navbar = () => {
     <Main>
       <NavbarContainer>
         <Logo>AtoZ</Logo>
-        <SearchContainer>
-          <SearchBar type="text" placeholder="Find your product" />
-        </SearchContainer>
+        <Search>
+          <SearchContainer>
+            <SearchBar type="text" placeholder="&#128269; Find your product" />
+          </SearchContainer>
+          <StyledMagni />
+        </Search>
         <NavigationLinks>
           <Profile
             onClick={() => {
               setIsPopover(!isPopover);
             }}
           >
-            <User />
+            <FaUser />
             User
             <Arrow show={isPopover}>
               <FaAngleUp />
@@ -42,7 +50,7 @@ const Navbar = () => {
           </Profile>
 
           <CartNav>
-            <Cart />
+            <FaCartShopping />
             <StyledLink to="/about">Cart</StyledLink>
           </CartNav>
         </NavigationLinks>
@@ -57,6 +65,11 @@ const Arrow = styled.span`
   transition-duration: 0.2s;
   transform: rotate(${(props) => (props.show ? "180deg" : "0deg")});
 `;
+const Search = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 const Main = styled.div`
   width: 100%;
   background-color: black;
@@ -64,6 +77,11 @@ const Main = styled.div`
   height: fit-content;
   justify-content: center;
   align-items: center;
+`;
+const StyledMagni = styled(FaMagnifyingGlass)`
+  width: 2rem;
+  height: 2rem;
+  color: white;
 `;
 const CartNav = styled.div`
   display: flex;
@@ -130,19 +148,20 @@ const NavbarContainer = styled.nav`
 
 const Logo = styled.div`
   color: white;
-  font-size: 3rem;
+  font-size: 2.6rem;
   font-weight: bold;
-  width: 10%;
+  width: fit-content;
 `;
 
 const SearchContainer = styled.div`
   display: flex;
-  width: 50%;
+  width: 50vw;
   height: 2.5rem;
   align-items: center;
   background-color: white;
   border-radius: 5px;
   padding: 0.25rem;
+  margin: 1rem;
 `;
 
 const SearchBar = styled.input`
@@ -161,7 +180,7 @@ const NavigationLinks = styled.ul`
   list-style: none;
   display: flex;
   gap: 1rem;
-  width: 15%;
+  width: fit-content;
   justify-content: space-between;
 `;
 

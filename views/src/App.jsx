@@ -3,6 +3,7 @@ import Navbar from "./Components/Navbar";
 import { Routes, Route } from "react-router-dom";
 import LandingPage from "./Pages/LandingPage";
 import ProductPage from "./Pages/ProductPage";
+import Footer from "./Components/Footer";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route exact path="/" element={<LandingPage />} />
         <Route path="/product" element={<ProductPage />} />
       </Routes>
+      <Footer />
     </>
   );
 }
