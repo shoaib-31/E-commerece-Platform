@@ -20,7 +20,7 @@ const Navbar = () => {
           <SearchContainer>
             <SearchBar type="text" placeholder="&#128269; Find your product" />
           </SearchContainer>
-          <StyledMagni />
+          <StyledMagni style={{ cursor: "pointer" }} />
         </Search>
         <NavigationLinks>
           <Profile
