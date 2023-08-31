@@ -15,7 +15,7 @@ const Navbar = () => {
   return (
     <Main>
       <NavbarContainer>
-        <Logo>AtoZ</Logo>
+        <Logo to="/">AtoZ</Logo>
         <Search>
           <SearchContainer>
             <SearchBar type="text" placeholder="&#128269; Find your product" />
@@ -146,11 +146,12 @@ const NavbarContainer = styled.nav`
   padding: 1rem 2rem;
 `;
 
-const Logo = styled.div`
+const Logo = styled(Link)`
   color: white;
   font-size: 2.6rem;
   font-weight: bold;
   width: fit-content;
+  text-decoration: none;
 `;
 
 const SearchContainer = styled.div`
