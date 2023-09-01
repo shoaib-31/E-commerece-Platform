@@ -15,6 +15,7 @@ const Container = styled.div`
   margin: 1rem 0;
   display: flex;
   height: fit-content;
+  padding: 1rem;
   justify-content: center;
   gap: 1rem;
 `;

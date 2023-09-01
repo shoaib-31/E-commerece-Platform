@@ -15,7 +15,7 @@ function CartItemContainer() {
 }
 
 const Container = styled.div`
-  width: 50%;
+  width: 60%;
   height: 40rem;
   padding: 1rem;
   color: black;

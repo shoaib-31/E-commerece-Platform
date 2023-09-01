@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import {
@@ -12,6 +12,22 @@ import {
 
 const Navbar = () => {
   const [isPopover, setIsPopover] = useState(false);
+
+  const popoverRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (popoverRef.current && !popoverRef.current.contains(event.target)) {
+        setIsPopover(false);
+      }
+    };
+
+    window.addEventListener("click", handleClickOutside);
+
+    return () => {
+      window.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
   return (
     <Main>
       <NavbarContainer>
@@ -25,6 +41,7 @@ const Navbar = () => {
         <NavigationLinks>
           <Profile
             onClick={() => {
+              event.stopPropagation();
               setIsPopover(!isPopover);
             }}
           >
@@ -33,12 +50,12 @@ const Navbar = () => {
             <Arrow show={isPopover}>
               <FaAngleUp />
             </Arrow>
-            <Popover show={isPopover}>
-              <PopItem show={isPopover}>
+            <Popover show={isPopover} ref={popoverRef}>
+              <PopItem show={isPopover} to="/account">
                 <span>
                   <FaGear />
                 </span>{" "}
-                Settings
+                Your Account
               </PopItem>
               <PopItem show={isPopover}>
                 <span>
@@ -111,8 +128,8 @@ const Popover = styled.div`
   right: -20%;
   background-color: #272727;
   border-radius: 5px;
-  top: 3rem;
-  width: 8rem;
+  top: 2.5rem;
+  width: 10rem;
   height: ${(props) => (props.show ? "3rem" : "0rem")};
   color: white;
   transition-timing-function: ease-out;
@@ -167,7 +184,8 @@ const SearchContainer = styled.div`
 
 const SearchBar = styled.input`
   flex: 1;
-  font-size: 1rem;
+  font-size: 1.2rem;
+  font-family: "Poppins", sans-serif;
   border: none;
   background-color: transparent;
   color: black;

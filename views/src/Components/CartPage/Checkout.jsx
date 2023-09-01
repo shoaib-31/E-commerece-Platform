@@ -19,7 +19,7 @@ function Checkout() {
   );
 }
 const Container = styled.div`
-  width: 20%;
+  width: 25%;
   height: fit-content;
   color: black;
   padding: 1rem;
