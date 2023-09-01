@@ -51,7 +51,7 @@ const Navbar = () => {
 
           <CartNav>
             <FaCartShopping />
-            <StyledLink to="/about">Cart</StyledLink>
+            <StyledLink to="/cart">Cart</StyledLink>
           </CartNav>
         </NavigationLinks>
       </NavbarContainer>

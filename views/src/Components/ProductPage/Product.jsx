@@ -125,6 +125,12 @@ const Button = styled.button`
   font-weight: 600;
   font-family: "Poppins", sans-serif;
   cursor: pointer;
+  background-color: #000;
+  transition-timing-function: ease-out;
+  transition-duration: 100ms;
+  &:hover {
+    background-color: #222333;
+  }
 `;
 const QuantityContainer = styled.div`
   width: 40%;
