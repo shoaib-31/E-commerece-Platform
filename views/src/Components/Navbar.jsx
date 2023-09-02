@@ -34,7 +34,7 @@ const Navbar = () => {
         <Logo to="/">AtoZ</Logo>
         <Search>
           <SearchContainer>
-            <SearchBar type="text" placeholder="&#128269; Find your product" />
+            <SearchBar type="text" placeholder="Find your product" />
           </SearchContainer>
           <StyledMagni style={{ cursor: "pointer" }} />
         </Search>
@@ -177,8 +177,8 @@ const SearchContainer = styled.div`
   height: 2.5rem;
   align-items: center;
   background-color: white;
-  border-radius: 5px;
-  padding: 0.25rem;
+  border-radius: 18px;
+  padding: 0.5rem;
   margin: 1rem;
 `;
 
