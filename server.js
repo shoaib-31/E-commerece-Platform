@@ -5,7 +5,9 @@ const db = require("./models/db");
 const bodyParser = require("body-parser");
 const productRoute = require("./routes/productRoute");
 const userRoute = require("./routes/userRoute");
+const cookieParser = require("cookie-parser");
 const authRoute = require("./routes/authRoute");
+app.use(cookieParser());
 app.use(bodyParser.json());
 dotenv.config();
 

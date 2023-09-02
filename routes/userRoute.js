@@ -8,12 +8,14 @@ const {
   getUserByEmail,
   getAllUsers,
 } = require("../controllers/userController");
+const protectRoute = require("../controllers/authHelper");
 
+router.post("/signup", signUp);
+router.use(protectRoute);
 router
-  .post("/signup", signUp)
+  .get("/email/:email", getUserByEmail)
   .put("/:email", updateUser)
   .delete("/:email", deleteUser)
-  .get("/email/:email", getUserByEmail)
   .get("/", getAllUsers);
 
 module.exports = router;

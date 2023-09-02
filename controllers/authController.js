@@ -18,15 +18,11 @@ login = async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
-    const token = jwt.sign(
+    const login = jwt.sign(
       { userId: user._id, email: user.email },
       process.env.JWT_SECRET
     );
-    res.cookie("jwt", token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
-    });
+    res.cookie("login", login, { httpOnly: true });
     res.json({ message: "login successful" });
   } catch (error) {
     console.error(error);
