@@ -174,7 +174,7 @@ const Logo = styled(Link)`
 const SearchContainer = styled.div`
   display: flex;
   width: 50vw;
-  height: 2.5rem;
+  height: 2rem;
   align-items: center;
   background-color: white;
   border-radius: 18px;

@@ -6,6 +6,7 @@ import ProductPage from "./Pages/ProductPage";
 import Footer from "./Components/Footer";
 import CartPage from "./Pages/CartPage";
 import AccountPage from "./Pages/AccountPage";
+import ProducListPage from "./Pages/ProducListPage";
 
 function App() {
   return (
@@ -13,9 +14,9 @@ function App() {
       <Navbar />
       <Routes>
         <Route exact path="/" element={<LandingPage />} />
-        <Route path="/product" element={<ProductPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/account" element={<AccountPage />} />
+        <Route path="/product" element={<ProducListPage />} />
       </Routes>
       <Footer />
     </>

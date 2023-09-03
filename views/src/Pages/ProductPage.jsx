@@ -1,6 +1,6 @@
 import React from "react";
 import { styled } from "styled-components";
-import Product from "../Components/ProductPage/Product";
+import Product from "../Components/ProductPage/ProductIndividual";
 
 const ProductPage = () => {
   return (

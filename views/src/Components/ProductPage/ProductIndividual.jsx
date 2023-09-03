@@ -4,7 +4,7 @@ import styled from "styled-components";
 import "../../assets/fonts.css";
 import { FaPlus, FaMinus } from "react-icons/fa6";
 
-function Product() {
+function ProductIndividual() {
   const [quantity, setQuantity] = useState(1);
   return (
     <Container>
@@ -157,4 +157,4 @@ const Quantity = styled.div`
   font-size: 1.2rem;
   font-weight: 500;
 `;
-export default Product;
+export default ProductIndividual;
