@@ -8,14 +8,13 @@ app.use(cookieParser());
 
 login = async (req, res) => {
   const { email, password } = req.body;
-
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: email });
     if (!user) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
     const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
+    if (isPasswordValid == false) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
     const login = jwt.sign(
@@ -29,4 +28,10 @@ login = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
-module.exports = { login };
+logout = function logout(req, res) {
+  res.cookie("login", " ", { maxAge: 1 });
+  res.json({
+    message: "user logged out succesfully",
+  });
+};
+module.exports = { login, logout };

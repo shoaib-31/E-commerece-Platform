@@ -17,17 +17,17 @@ signUp = async function (req, res) {
 
 updateUser = async function (req, res) {
   const { email } = req.params;
-  const updatedUserData = req.body;
+  const dataToBeUpdated = req.body;
 
   try {
-    const user = await User.findOneAndUpdate({ email }, updatedUserData, {
-      new: true,
-    });
+    const user = await User.findOne({ email });
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
+    const newData = { ...user, ...dataToBeUpdated };
+    user.set(newData);
+    await user.save();
     res.status(200).json({
       message: "User updated successfully",
       User: user,
