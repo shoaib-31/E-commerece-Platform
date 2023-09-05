@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import CategoriesData from "./CategoriesData";
+import { Link } from "react-router-dom";
 
 function Categories() {
   return (
@@ -10,7 +11,7 @@ function Categories() {
       <CategoriesBox>
         {CategoriesData.map((category) => {
           return (
-            <Category>
+            <Category to="/product">
               <CategoryImg src={category.image} />
               <CategoryName>{category.name}</CategoryName>
             </Category>
@@ -20,9 +21,10 @@ function Categories() {
     </Container>
   );
 }
-const Category = styled.div`
+const Category = styled(Link)`
   padding: 5px;
   margin: 5px;
+  text-decoration: none;
   color: black;
   flex-wrap: wrap;
   display: flex;

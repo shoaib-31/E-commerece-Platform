@@ -1,18 +1,19 @@
 import React from "react";
 import { styled } from "styled-components";
-
+import { useSelector } from "react-redux";
 function Checkout() {
+  const { totalQuantity, totalPrice } = useSelector((state) => state.allCart);
   return (
     <Container>
       <Head>Summary</Head>
       <hr style={{ backgroundColor: "black", height: "1px", width: "100%" }} />
       <TotalQuant>
         <span>Total Quantity:</span>
-        <span>4</span>
+        <span>{totalQuantity}</span>
       </TotalQuant>
       <TotalQuant>
         <span>Total Price:</span>
-        <span>₹ 1200</span>
+        <span>₹ {totalPrice}</span>
       </TotalQuant>
       <CheckoutBtn>Checkout</CheckoutBtn>
     </Container>

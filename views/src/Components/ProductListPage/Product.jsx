@@ -1,17 +1,24 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
-import ProductImg from "../ProductPage/Product.webp";
+import { addToCart } from "../../features/cartSlice";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
-function Product() {
+function Product(props) {
+  const dispatch = useDispatch();
+  const { _id, thumbnail, title, price } = props.item;
+  const dynamicURL = `products/${_id}`;
   return (
     <CompContainer>
-      <Image src={ProductImg} />
-      <Info>
-        <Name>Manba Limited Edition Running Shoes</Name>
-        <Price>₹ 1200</Price>
+      <Image src={thumbnail} />
+      <Info to={dynamicURL}>
+        <Name>{title}</Name>
+        <Cost>₹ {price}</Cost>
       </Info>
       <Third>
-        <Button>ADD TO CART</Button>
+        <Button onClick={() => dispatch(addToCart(props.item))}>
+          ADD TO CART
+        </Button>
       </Third>
     </CompContainer>
   );
@@ -42,10 +49,11 @@ const Image = styled.img`
   border-radius: 5px;
   aspect-ratio: 1;
 `;
-const Info = styled.div`
+const Info = styled(Link)`
   display: flex;
   width: 60%;
   height: 55%;
+  text-decoration: none;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: flex-start;
@@ -56,7 +64,7 @@ const Name = styled.div`
   color: black;
   font-family: "Fjalla One", sans-serif;
 `;
-const Price = styled.div`
+const Cost = styled.div`
   font-size: 17px;
   font-weight: 500;
   color: black;

@@ -7,15 +7,23 @@ const getAProduct = async (req, res) => {
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
-    res.json({
-      message: "Product found",
-      product,
-    });
+    res.json(product);
   } catch (error) {
     console.error("Error fetching product:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+const getCategory = async function (req, res) {
+  try {
+    const categories = await Product.distinct("category");
+    res.json(categories);
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 const getProducts = async function (req, res) {
   try {
     const { category } = req.params;
@@ -83,4 +91,5 @@ module.exports = {
   updateProduct,
   deleteProduct,
   getAProduct,
+  getCategory,
 };

@@ -1,38 +1,30 @@
-import React, { useState } from "react";
+import React from "react";
 import { styled } from "styled-components";
-import Product from "../ProductPage/Product.webp";
 import { FaPlus, FaMinus } from "react-icons/fa6";
+import { addToCart, removeFromCart } from "../../features/cartSlice";
+import { useDispatch } from "react-redux";
 
-function CartItemComponent() {
-  const [quantity, setQuantity] = useState(1);
+function CartItemComponent(props) {
+  const dispatch = useDispatch();
+  const { thumbnail, title, price, quantity } = props.item;
   return (
     <CompContainer>
-      <Image src={Product} />
+      <Image src={thumbnail} />
       <Info>
-        <Name>Manba Limited Edition Running Shoes</Name>
-        <Price>₹ 1200</Price>
+        <Name>{title}</Name>
+        <Price>₹ {price}</Price>
       </Info>
       <Third>
         <QuantityContainer>
-          <AlterQuantity
-            onClick={() => {
-              setQuantity(quantity + 1);
-            }}
-          >
+          <AlterQuantity onClick={() => dispatch(addToCart(props.item))}>
             <FaPlus />
           </AlterQuantity>
           <Quantity>{quantity}</Quantity>
-          <AlterQuantity
-            onClick={() => {
-              if (quantity > 1) {
-                setQuantity(quantity - 1);
-              }
-            }}
-          >
+          <AlterQuantity onClick={() => dispatch(removeFromCart(props.item))}>
             <FaMinus />
           </AlterQuantity>
         </QuantityContainer>
-        <TotalPrice>Total: ₹ {quantity * 1200}</TotalPrice>
+        <TotalPrice>Total: ₹ {quantity * price}</TotalPrice>
       </Third>
     </CompContainer>
   );

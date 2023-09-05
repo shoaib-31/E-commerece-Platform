@@ -7,6 +7,8 @@ const productRoute = require("./routers/productRouter");
 const userRoute = require("./routers/userRouter");
 const orderRoute = require("./routers/orderRouter");
 const cookieParser = require("cookie-parser");
+var cors = require("cors");
+app.use(cors());
 app.use(cookieParser());
 app.use(bodyParser.json());
 dotenv.config();

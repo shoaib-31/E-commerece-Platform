@@ -7,9 +7,11 @@ const {
   updateProduct,
   deleteProduct,
   getAProduct,
+  getCategory,
 } = require("../controllers/productController");
 
 router.get("/:id", getAProduct);
+router.get("/category/getCategory", getCategory);
 router.get("/category/:category", getProducts);
 router.use(protectRoute);
 router.use(isAdmin(["Admin", "BusinessOwner"]));

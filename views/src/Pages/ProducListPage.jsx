@@ -1,24 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { styled } from "styled-components";
 import Product from "../Components/ProductListPage/Product";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { fetchProducts } from "../features/productSlice";
+import Preloader from "../Components/Preloader";
+import axios from "axios";
 
 function ProducListPage() {
-  const [selectedOption, setSelectedOption] = React.useState("");
-
+  const dispatch = useDispatch();
+  const [categories, setCategories] = useState([]);
+  const [selectedOption, setSelectedOption] = React.useState("smartphones");
+  const { products, status, error } = useSelector((state) => state.products);
   const handleChange = (event) => {
     setSelectedOption(event.target.value);
   };
-  const categories = [
-    { name: "Electronics", value: "electronics" },
-    { name: "Men's Clothing", value: "men" },
-    { name: "Women's Clothing", value: "women" },
-  ];
+  function toTitleCase(str) {
+    return str
+      .toLowerCase()
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  }
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/products/category/getCategory")
+      .then((response) => {
+        setCategories(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
+    dispatch(fetchProducts(selectedOption));
+  }, [dispatch, selectedOption]);
+
   return (
     <Container>
       <Filters>
         <FormControl sx={{ width: "80%" }}>
-          <InputLabel id="select-label">Select a Category</InputLabel>
+          <InputLabel id="select-label">Category</InputLabel>
           <Select
             labelId="select-label"
             id="basic-select"
@@ -27,19 +47,23 @@ function ProducListPage() {
           >
             {categories.map((category) => {
               return (
-                <MenuItem value={category.value}>{category.name}</MenuItem>
+                <MenuItem value={category}>{toTitleCase(category)}</MenuItem>
               );
             })}
           </Select>
         </FormControl>
       </Filters>
-      <Products>
-        <Product />
-        <Product />
-        <Product />
-        <Product />
-        <Product />
-      </Products>
+      {status === "loading" ? (
+        <Preloader />
+      ) : status === "failed" ? (
+        <div>Error: {error}</div>
+      ) : (
+        <Products>
+          {products.map((item) => (
+            <Product item={item} key={item.id} />
+          ))}
+        </Products>
+      )}
     </Container>
   );
 }
@@ -65,9 +89,24 @@ const Filters = styled.div`
 `;
 const Products = styled.div`
   width: 60%;
-  height: fit-content;
+  height: 45rem;
+  overflow-y: scroll;
   background-color: white;
   border-radius: 10px;
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: darkgray;
+    border-radius: 6px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: gray;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: lightgray;
+    border-radius: 10px;
+  }
 `;
 
 export default ProducListPage;

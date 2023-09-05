@@ -1,66 +1,91 @@
-import React, { useState } from "react";
-import productImage from "./Product.webp";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import "../../assets/fonts.css";
 import { FaPlus, FaMinus } from "react-icons/fa6";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import Loadergif from "../Rhombus.gif";
+import { addToCart, removeFromCart } from "../../features/cartSlice";
+import { useDispatch } from "react-redux";
 
 function ProductIndividual() {
-  const [quantity, setQuantity] = useState(1);
+  const dispatch = useDispatch();
+  const { productId } = useParams();
+  const [productData, setProductData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // Make a GET request with Axios
+    axios
+      .get(`http://localhost:8000/products/${productId}`) // Replace with your API endpoint and parameter
+      .then((response) => {
+        setProductData(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+        setError(error);
+        setLoading(false);
+      });
+  }, [productId]);
+  if (loading) {
+    return (
+      <Loader>
+        <img src={Loadergif} alt="Loading" />
+      </Loader>
+    );
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  if (!productData) {
+    return <div>Product not found.</div>;
+  }
+
+  const { thumbnail, brand, price, description, title } = productData;
   return (
     <Container>
       <ImgContainer>
-        <Image src={productImage} />
+        <Image src={thumbnail} />
       </ImgContainer>
       <InfoContainer>
-        <Company>Manba</Company>
-        <Title>Manba Limited Edition Running Shoes</Title>
-        <Description>
-          Experience the epitome of running innovation with the Manba Limited
-          Edition Running Shoes. Merging cutting-edge technology with sleek
-          design, these shoes offer a responsive, cushioned midsole for optimal
-          energy return and joint protection. The breathable yet durable upper
-          ensures a secure fit while promoting airflow, and the meticulous
-          craftsmanship is evident in every detail, from reflective accents to
-          the customizable lacing system. Elevate your running game with these
-          shoes that embody performance and style in every stride.
-        </Description>
+        <Company>{brand}</Company>
+        <Title>{title}</Title>
+        <Description>{description}</Description>
         <PriceContainer>
-          <Price>₹ 1200</Price>
+          <Price>₹ {price}</Price>
         </PriceContainer>
         <ButtonContainer>
-          <QuantityContainer>
-            <AlterQuantity
-              onClick={() => {
-                setQuantity(quantity + 1);
-              }}
-            >
-              <FaPlus />
-            </AlterQuantity>
-            <Quantity>{quantity}</Quantity>
-            <AlterQuantity
-              onClick={() => {
-                if (quantity > 1) {
-                  setQuantity(quantity - 1);
-                }
-              }}
-            >
-              <FaMinus />
-            </AlterQuantity>
-          </QuantityContainer>
-          <Button>ADD TO CART</Button>
+          <Button
+            onClick={() => dispatch(addToCart({ ...productData, quantity: 1 }))}
+          >
+            ADD TO CART
+          </Button>
         </ButtonContainer>
       </InfoContainer>
     </Container>
   );
 }
+const Loader = styled.div`
+  width: 100%;
+  height: 50rem;
+  display: flex;
+  margin: 2rem auto;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+`;
 const Container = styled.div`
   max-width: 1700px;
   width: 100%;
   height: fit-content;
   background-color: white;
-  margin-top: 1rem;
+  margin: 2rem auto;
   display: flex;
-  min-height: 80vh;
+  min-height: 50rem;
   align-items: center;
   justify-content: space-evenly;
   padding: 1rem;
