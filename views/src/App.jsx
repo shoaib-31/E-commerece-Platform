@@ -1,29 +1,47 @@
-import styled from "styled-components";
 import Navbar from "./Components/Navbar";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Outlet, useLocation } from "react-router-dom";
 import LandingPage from "./Pages/LandingPage";
-import ProductPage from "./Pages/ProductPage";
 import Footer from "./Components/Footer";
 import CartPage from "./Pages/CartPage";
 import AccountPage from "./Pages/AccountPage";
-import ProducListPage from "./Pages/ProducListPage";
+import ProductListPage from "./Pages/ProducListPage";
 import ProductIndividual from "./Components/ProductPage/ProductIndividual";
+import Login from "./Pages/Login";
+import { useEffect, useState } from "react";
+import { SignUp } from "./Pages/SignUp";
 
 function App() {
+  const location = useLocation();
+  const [showNav, setShowNav] = useState(true);
+
+  useEffect(() => {
+    // check the current route
+    const currentPath = location.pathname;
+    if (currentPath === "/login" || currentPath === "/signup") {
+      setShowNav(false);
+    } else {
+      setShowNav(true);
+    }
+  }, [location.pathname]);
+
   return (
     <>
-      <Navbar />
+      {showNav && <Navbar />}
       <Routes>
-        <Route exact path="/" element={<LandingPage />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route
-          path="/product/products/:productId"
-          element={<ProductIndividual />}
-        />
-        <Route path="/account" element={<AccountPage />} />
-        <Route path="/product" element={<ProducListPage />} />
+        <Route path="/" element={<Outlet />}>
+          <Route index element={<LandingPage />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route
+            path="/product/:category/:productId"
+            element={<ProductIndividual />}
+          />
+          <Route path="/account" element={<AccountPage />} />
+          <Route path="/product/:category" element={<ProductListPage />} />
+        </Route>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
       </Routes>
-      <Footer />
+      {showNav && <Footer />}
     </>
   );
 }

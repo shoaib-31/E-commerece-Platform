@@ -22,10 +22,7 @@ const getUserOrders = async (req, res) => {
     if (!orders) {
       res.status(404).json({ message: "No orders found" });
     }
-    res.status(200).json({
-      message: "Orders retrieved successfully",
-      orders,
-    });
+    res.status(200).json(orders);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

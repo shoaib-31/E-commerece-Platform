@@ -1,22 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { styled } from "styled-components";
-
+import { clientconfig } from "../../../clientconfig";
+const { url } = clientconfig;
+import axios from "axios";
+import { setUser } from "../../features/userSlice";
 const ProfileComponent = () => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
+  const { name, email, gender, phoneNumber, token } = user;
+  const originalemail = email;
   const [formData, setFormData] = useState({
-    name: "Shoaib Akhtar",
-    phoneNumber: "9125216099",
-    email: "shoaibakmasood@gmail.com",
-    gender: "male",
+    name,
+    phoneNumber,
+    email,
+    gender,
   });
-
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    try {
+      // Send a PATCH request to the server with the updated user data
+      const response = await axios.patch(
+        `${url}/user/email/${originalemail}`,
+        formData,
+        { headers }
+      );
+
+      // Check the response status and handle it accordingly
+      if (response.status === 200) {
+        console.log("Data updated successfully:", response.data);
+        dispatch(setUser(response.data.User));
+      } else {
+        console.error("Data update failed.");
+      }
+    } catch (error) {
+      console.error("An error occurred while updating data:", error);
+    }
   };
 
   return (
@@ -52,9 +79,8 @@ const ProfileComponent = () => {
         <FormGroup>
           <Label>Gender:</Label>
           <Select name="gender" value={formData.gender} onChange={handleChange}>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
           </Select>
         </FormGroup>
         <Button type="submit">Save</Button>

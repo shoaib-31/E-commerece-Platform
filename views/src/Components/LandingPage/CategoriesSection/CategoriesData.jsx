@@ -1,24 +1,52 @@
-import Electronics from "./Electronics.jpeg";
-import Jewelery from "./Jewelery.jpeg";
-import Men from "./Men.jpeg";
-import Women from "./Women.jpeg";
+import smartphones from "./smartphones.jpeg";
+import laptops from "./laptops.jpeg";
+import skincare from "./skincare.jpeg";
+import clothing from "./clothing.jpeg";
+import shoes from "./shoes.jpeg";
+import grocery from "./groceries.jpeg";
+import frag from "./fragerances.jpeg";
+import homeDeco from "./home-deco.jpeg";
 
 const CategoriesData = [
   {
-    name: "Electronics",
-    image: Electronics,
+    name: "Smartphones",
+    image: smartphones,
+    link: "smartphones",
   },
   {
-    name: "Jewelery",
-    image: Jewelery,
+    name: "Laptop",
+    image: laptops,
+    link: "laptops",
   },
   {
-    name: "Men's clothing",
-    image: Men,
+    name: "Skincare",
+    image: skincare,
+    link: "skincare",
   },
   {
-    name: "Women's clothing",
-    image: Women,
+    name: "Home-Decoration",
+    image: homeDeco,
+    link: "home-decoration",
+  },
+  {
+    name: "Groceries",
+    image: grocery,
+    link: "groceries",
+  },
+  {
+    name: "Fragrences",
+    image: frag,
+    link: "fragrances",
+  },
+  {
+    name: "Shoes",
+    image: shoes,
+    link: "shoes",
+  },
+  {
+    name: "Clothings",
+    image: clothing,
+    link: "clothing",
   },
 ];
 

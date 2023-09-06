@@ -6,12 +6,15 @@ import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { fetchProducts } from "../features/productSlice";
 import Preloader from "../Components/Preloader";
 import axios from "axios";
-
+import { useParams } from "react-router-dom";
+import { clientconfig } from "../../clientconfig";
 function ProducListPage() {
+  const { category } = useParams();
   const dispatch = useDispatch();
   const [categories, setCategories] = useState([]);
-  const [selectedOption, setSelectedOption] = React.useState("smartphones");
+  const [selectedOption, setSelectedOption] = useState(category);
   const { products, status, error } = useSelector((state) => state.products);
+  const { url } = clientconfig;
   const handleChange = (event) => {
     setSelectedOption(event.target.value);
   };
@@ -24,7 +27,7 @@ function ProducListPage() {
   }
   useEffect(() => {
     axios
-      .get("http://localhost:8000/products/category/getCategory")
+      .get(`${url}/products/category/getCategory`)
       .then((response) => {
         setCategories(response.data);
       })

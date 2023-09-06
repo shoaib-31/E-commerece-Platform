@@ -7,8 +7,25 @@ const productRoute = require("./routers/productRouter");
 const userRoute = require("./routers/userRouter");
 const orderRoute = require("./routers/orderRouter");
 const cookieParser = require("cookie-parser");
-var cors = require("cors");
-app.use(cors());
+const cors = require("cors");
+
+// Specify the allowed origin (replace with your frontend's actual origin)
+const allowedOrigins = ["http://localhost:5173"]; // Add your frontend's URL here
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      // If the origin is in the allowed list or is not defined (e.g., same-origin request), allow it
+      callback(null, true);
+    } else {
+      // If the origin is not allowed, reject the request
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true, // Allow credentials (cookies)
+};
+
+app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(bodyParser.json());
 dotenv.config();

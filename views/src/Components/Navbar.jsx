@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { logout } from "../features/userSlice";
+import { clearCart } from "../features/cartSlice";
 import {
   FaAngleUp,
   FaCartShopping,
@@ -9,12 +14,33 @@ import {
   FaUser,
   FaMagnifyingGlass,
 } from "react-icons/fa6";
-
+import { clientconfig } from "../../clientconfig";
+const { url } = clientconfig;
 const Navbar = () => {
+  const { user } = useSelector((state) => state.user);
   const [isPopover, setIsPopover] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch(); // Initialize useDispatch
 
+  const handleLogout = () => {
+    const token = user.token;
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    axios
+      .get(`${url}/user/logout`, { headers })
+      .then((response) => {
+        // Redirect the user to the desired route after logout
+        navigate("/"); // Replace '/login' with the desired logout destination
+        dispatch(clearCart());
+        dispatch(logout());
+      })
+      .catch((error) => {
+        // Handle any errors that occurred during logout
+        console.error("Logout error:", error.message);
+      });
+  };
   const popoverRef = useRef(null);
-
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (popoverRef.current && !popoverRef.current.contains(event.target)) {
@@ -38,44 +64,55 @@ const Navbar = () => {
           </SearchContainer>
           <StyledMagni style={{ cursor: "pointer" }} />
         </Search>
-        <NavigationLinks>
-          <Profile
-            onClick={() => {
-              event.stopPropagation();
-              setIsPopover(!isPopover);
-            }}
-          >
-            <FaUser />
-            User
-            <Arrow show={isPopover}>
-              <FaAngleUp />
-            </Arrow>
-            <Popover show={isPopover} ref={popoverRef}>
-              <PopItem show={isPopover} to="/account">
-                <span>
-                  <FaGear />
-                </span>{" "}
-                Your Account
-              </PopItem>
-              <PopItem show={isPopover}>
-                <span>
-                  <FaPowerOff />
-                </span>{" "}
-                Log Out
-              </PopItem>
-            </Popover>
-          </Profile>
+        {user ? (
+          <NavigationLinks>
+            <Profile
+              onClick={() => {
+                event.stopPropagation();
+                setIsPopover(!isPopover);
+              }}
+            >
+              <FaUser />
+              {user.name}
+              <Arrow show={isPopover}>
+                <FaAngleUp />
+              </Arrow>
+              <Popover show={isPopover} ref={popoverRef}>
+                <PopItem show={isPopover} to="/account">
+                  <span>
+                    <FaGear />
+                  </span>{" "}
+                  Your Account
+                </PopItem>
+                <PopItem show={isPopover} onClick={handleLogout}>
+                  <span>
+                    <FaPowerOff />
+                  </span>{" "}
+                  Log Out
+                </PopItem>
+              </Popover>
+            </Profile>
 
-          <CartNav>
-            <FaCartShopping />
-            <StyledLink to="/cart">Cart</StyledLink>
-          </CartNav>
-        </NavigationLinks>
+            <CartNav>
+              <FaCartShopping />
+              <StyledLink to="/cart">Cart</StyledLink>
+            </CartNav>
+          </NavigationLinks>
+        ) : (
+          <Login to="/login">Login/Signup</Login>
+        )}
       </NavbarContainer>
     </Main>
   );
 };
 
+const Login = styled(Link)`
+  font-size: 1.1rem;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  text-decoration: none;
+  color: white;
+`;
 const Arrow = styled.span`
   color: white;
   transition-timing-function: ease-out;

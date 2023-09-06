@@ -1,9 +1,8 @@
-import React from "react";
 import Carousel from "../Components/LandingPage/Carousel/Carousel";
 import { styled } from "styled-components";
+import React from "react";
 import Categories from "../Components/LandingPage/CategoriesSection/Categories";
 import Description from "../Components/LandingPage/DescriptionSection/Description";
-
 const LandingPage = () => {
   return (
     <Container>

@@ -1,19 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
-import Product from "../ProductPage/Product.webp";
-
-function OrderItem() {
+import { clientconfig } from "../../../clientconfig";
+import axios from "axios";
+const { url } = clientconfig;
+function OrderItem(props) {
+  const [title, setTitle] = useState("");
+  const [thumbnail, setThumbnail] = useState("");
+  const { productId, quantity, status } = props.item;
+  useEffect(() => {
+    axios
+      .get(`${url}/products/${productId}`)
+      .then((response) => {
+        setThumbnail(response.data.thumbnail);
+        setTitle(response.data.title);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
   return (
     <Container>
-      <Image src={Product} />
+      <Image src={thumbnail} />
       <Mid>
-        <Name>Manba Limited Edition Running Shoes</Name>
+        <Name>{title}</Name>
         <Status>
-          <span style={{ color: "black" }}>Status: </span>Shipped
+          <span style={{ color: "black" }}>Status: </span>
+          {status}
         </Status>
       </Mid>
       <Quantity>
-        Quantity:<span>1</span>
+        Quantity:<span>{quantity}</span>
       </Quantity>
     </Container>
   );

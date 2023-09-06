@@ -2,24 +2,38 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 
 const protectRoute = async (req, res, next) => {
-  if (req.cookies.login) {
-    let isVerified = jwt.verify(req.cookies.login, process.env.JWT_SECRET);
-    if (isVerified) {
-      const user = await User.findById(isVerified.userId);
-      if (!user) {
-        return res.json({
-          message: "Could not find User",
+  // Try to get the token from the "Authorization" header
+  const authHeader = req.headers.authorization;
+
+  if (authHeader) {
+    const token = authHeader.split(" ")[1]; // Assuming it's in the format "Bearer <token>"
+
+    try {
+      let isVerified = jwt.verify(token, process.env.JWT_SECRET);
+      if (isVerified) {
+        const email = isVerified.email;
+        const user = await User.findOne({ email: email });
+        if (!user) {
+          return res.json({
+            message: "Could not find User",
+          });
+        }
+        req.role = user.role;
+        req.id = user.id;
+        next();
+      } else {
+        res.json({
+          status: 401,
+          message: "Unauthorized",
         });
+        res.redirect("/login");
       }
-      req.role = user.role;
-      req.id = user.id;
-      next();
-    } else {
+    } catch (error) {
+      console.error("Token verification error:", error);
       res.json({
         status: 401,
         message: "Unauthorized",
       });
-      //   res.redirect("/login");
     }
   } else {
     res.json({

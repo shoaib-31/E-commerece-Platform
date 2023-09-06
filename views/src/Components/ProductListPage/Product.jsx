@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
-import { addToCart } from "../../features/cartSlice";
+import { addToCartWithCheck } from "../../features/cartSlice";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 function Product(props) {
   const dispatch = useDispatch();
-  const { _id, thumbnail, title, price } = props.item;
-  const dynamicURL = `products/${_id}`;
+  const { _id, thumbnail, title, price, category } = props.item;
+  const dynamicURL = `/product/${category}/${_id}`;
   return (
     <CompContainer>
       <Image src={thumbnail} />
@@ -16,7 +16,7 @@ function Product(props) {
         <Cost>₹ {price}</Cost>
       </Info>
       <Third>
-        <Button onClick={() => dispatch(addToCart(props.item))}>
+        <Button onClick={() => dispatch(addToCartWithCheck(props.item))}>
           ADD TO CART
         </Button>
       </Third>

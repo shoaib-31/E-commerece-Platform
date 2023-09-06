@@ -5,9 +5,10 @@ import { FaPlus, FaMinus } from "react-icons/fa6";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Loadergif from "../Rhombus.gif";
-import { addToCart, removeFromCart } from "../../features/cartSlice";
+import { addToCartWithCheck, removeFromCart } from "../../features/cartSlice";
 import { useDispatch } from "react-redux";
-
+import { clientconfig } from "../../../clientconfig";
+const { url } = clientconfig;
 function ProductIndividual() {
   const dispatch = useDispatch();
   const { productId } = useParams();
@@ -18,7 +19,7 @@ function ProductIndividual() {
   useEffect(() => {
     // Make a GET request with Axios
     axios
-      .get(`http://localhost:8000/products/${productId}`) // Replace with your API endpoint and parameter
+      .get(`${url}/products/${productId}`) // Replace with your API endpoint and parameter
       .then((response) => {
         setProductData(response.data);
         setLoading(false);
@@ -60,7 +61,9 @@ function ProductIndividual() {
         </PriceContainer>
         <ButtonContainer>
           <Button
-            onClick={() => dispatch(addToCart({ ...productData, quantity: 1 }))}
+            onClick={() =>
+              dispatch(addToCartWithCheck({ ...productData, quantity: 1 }))
+            }
           >
             ADD TO CART
           </Button>

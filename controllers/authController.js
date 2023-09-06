@@ -22,7 +22,9 @@ login = async (req, res) => {
       process.env.JWT_SECRET
     );
     res.cookie("login", login, { httpOnly: true });
-    res.json({ message: "login successful" });
+    res.status(200).json({
+      data: { message: "login successful", login: login, user: user },
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });
