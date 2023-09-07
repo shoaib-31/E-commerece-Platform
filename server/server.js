@@ -32,7 +32,7 @@ app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(bodyParser.json());
 dotenv.config();
-
+app.get("/",(req,res)=>{res.json("hello"});
 app.use("/user", userRoute);
 app.use("/products", productRoute);
 app.use("/orders", orderRoute);
