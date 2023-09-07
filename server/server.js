@@ -12,7 +12,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
 // Specify the allowed origin (replace with your frontend's actual origin)
-const allowedOrigins = ["http://localhost:5173"]; // Add your frontend's URL here
+const allowedOrigins = ["https://e-commerece-platform-9bee.vercel.app"]; // Add your frontend's URL here
 
 const corsOptions = {
   origin: function (origin, callback) {
