@@ -21,7 +21,6 @@ login = async (req, res) => {
       { userId: user._id, email: user.email },
       process.env.JWT_SECRET
     );
-    res.cookie("login", login, { httpOnly: true });
     res.status(200).json({
       data: { message: "login successful", login: login, user: user },
     });

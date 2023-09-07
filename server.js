@@ -4,8 +4,10 @@ const dotenv = require("dotenv");
 const db = require("./models/db");
 const bodyParser = require("body-parser");
 const productRoute = require("./routers/productRouter");
+const stripe = require("stripe")(process.env.STRIPE_KEY);
 const userRoute = require("./routers/userRouter");
 const orderRoute = require("./routers/orderRouter");
+const paymentRoute = require("./routers/paymentRouter");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
@@ -33,6 +35,7 @@ dotenv.config();
 app.use("/user", userRoute);
 app.use("/products", productRoute);
 app.use("/orders", orderRoute);
+app.use("/payments", paymentRoute);
 
 const PORT = process.env.PORT || 5000;
 

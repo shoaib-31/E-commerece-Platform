@@ -9,6 +9,8 @@ import ProductIndividual from "./Components/ProductPage/ProductIndividual";
 import Login from "./Pages/Login";
 import { useEffect, useState } from "react";
 import { SignUp } from "./Pages/SignUp";
+import WrappedPaymentForm from "./Components/WrappedPaymentForm";
+import SearchPage from "./Pages/SearchPage";
 
 function App() {
   const location = useLocation();
@@ -37,9 +39,12 @@ function App() {
           />
           <Route path="/account" element={<AccountPage />} />
           <Route path="/product/:category" element={<ProductListPage />} />
+          <Route path="/product/:category" element={<ProductListPage />} />
+          <Route path="/product/search" element={<SearchPage />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/payment" element={<WrappedPaymentForm />} />
       </Routes>
       {showNav && <Footer />}
     </>

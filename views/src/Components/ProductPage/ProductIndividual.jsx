@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { clientconfig } from "../../../clientconfig";
 const { url } = clientconfig;
 function ProductIndividual() {
+  const [isClicked, setIsClicked] = useState(false);
   const dispatch = useDispatch();
   const { productId } = useParams();
   const [productData, setProductData] = useState(null);
@@ -60,13 +61,26 @@ function ProductIndividual() {
           <Price>₹ {price}</Price>
         </PriceContainer>
         <ButtonContainer>
-          <Button
-            onClick={() =>
-              dispatch(addToCartWithCheck({ ...productData, quantity: 1 }))
-            }
-          >
-            ADD TO CART
-          </Button>
+          {!isClicked ? (
+            <Button
+              onClick={() => {
+                dispatch(addToCartWithCheck({ ...productData, quantity: 1 }));
+                setIsClicked(true);
+              }}
+            >
+              ADD TO CART
+            </Button>
+          ) : (
+            <Button
+              style={{ backgroundColor: "#333333" }}
+              onClick={() => {
+                dispatch(removeFromCart(productData));
+                setIsClicked(false);
+              }}
+            >
+              ADDED TO CART
+            </Button>
+          )}
         </ButtonContainer>
       </InfoContainer>
     </Container>

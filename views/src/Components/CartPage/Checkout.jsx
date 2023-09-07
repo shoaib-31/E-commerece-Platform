@@ -1,7 +1,9 @@
 import React from "react";
 import { styled } from "styled-components";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 function Checkout() {
+  const navigate = useNavigate();
   const { totalQuantity, totalPrice } = useSelector((state) => state.allCart);
   return (
     <Container>
@@ -15,12 +17,18 @@ function Checkout() {
         <span>Total Price:</span>
         <span>₹ {totalPrice}</span>
       </TotalQuant>
-      <CheckoutBtn>Checkout</CheckoutBtn>
+      <CheckoutBtn
+        onClick={() => {
+          navigate("/payment");
+        }}
+      >
+        Checkout
+      </CheckoutBtn>
     </Container>
   );
 }
 const Container = styled.div`
-  width: 25%;
+  width: 100%;
   height: fit-content;
   color: black;
   padding: 1rem;

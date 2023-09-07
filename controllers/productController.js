@@ -85,6 +85,19 @@ const deleteProduct = async function (req, res) {
     });
   }
 };
+const searchProduct = async function (req, res) {
+  try {
+    const searchQuery = req.query.search;
+    const products = await Product.find({
+      title: { $regex: new RegExp(searchQuery, "i") },
+    });
+
+    res.json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error hi" });
+  }
+};
 module.exports = {
   getProducts,
   addProduct,
@@ -92,4 +105,5 @@ module.exports = {
   deleteProduct,
   getAProduct,
   getCategory,
+  searchProduct,
 };

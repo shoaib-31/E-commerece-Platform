@@ -37,7 +37,6 @@ const Login = () => {
         // Check for a successful login message
         if (message === "login successful" && login) {
           // Store the JWT token in a browser cookie or local storage
-          document.cookie = `login=${login}, path=/`;
           // Dispatch the user to the Redux store
           dispatch(setUser(dataToBeSent));
 

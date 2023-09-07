@@ -3,9 +3,16 @@ const Order = require("../models/orderModel");
 const addUserOrder = async (req, res) => {
   try {
     const userId = req.id;
-    const { quantity, productId } = req.body;
-    const order = { userId, productId, quantity };
-    const addedOrder = await Order.create(order);
+    const { cart } = req.body;
+    const addedOrder = [];
+    console.log(cart);
+    for (let i = 0; i < cart.length; i++) {
+      console.log(cart[i]);
+      const { quantity, _id } = cart[i];
+      productId = _id;
+      const order = { userId, productId, quantity };
+      addedOrder.push(await Order.create(order));
+    }
     res.status(201).json({
       message: "Order created successfully",
       order: addedOrder,

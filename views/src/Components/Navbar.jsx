@@ -16,7 +16,9 @@ import {
 } from "react-icons/fa6";
 import { clientconfig } from "../../clientconfig";
 const { url } = clientconfig;
+
 const Navbar = () => {
+  const [searchQuery, setSearchQuery] = useState("");
   const { user } = useSelector((state) => state.user);
   const [isPopover, setIsPopover] = useState(false);
   const navigate = useNavigate();
@@ -60,9 +62,17 @@ const Navbar = () => {
         <Logo to="/">AtoZ</Logo>
         <Search>
           <SearchContainer>
-            <SearchBar type="text" placeholder="Find your product" />
+            <SearchBar
+              type="text"
+              placeholder="Find your product"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
           </SearchContainer>
-          <StyledMagni style={{ cursor: "pointer" }} />
+          <StyledMagni
+            onClick={() => navigate(`/product/search?search=${searchQuery}`)}
+            style={{ cursor: "pointer" }}
+          />
         </Search>
         {user ? (
           <NavigationLinks>

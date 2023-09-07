@@ -8,8 +8,10 @@ const {
   deleteProduct,
   getAProduct,
   getCategory,
+  searchProduct,
 } = require("../controllers/productController");
 
+router.get("/search", searchProduct);
 router.get("/:id", getAProduct);
 router.get("/category/getCategory", getCategory);
 router.get("/category/:category", getProducts);

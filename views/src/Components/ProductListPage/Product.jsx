@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
-import { addToCartWithCheck } from "../../features/cartSlice";
+import { addToCartWithCheck, removeFromCart } from "../../features/cartSlice";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 function Product(props) {
+  const [isClicked, setIsClicked] = useState(false);
   const dispatch = useDispatch();
   const { _id, thumbnail, title, price, category } = props.item;
   const dynamicURL = `/product/${category}/${_id}`;
@@ -16,9 +17,26 @@ function Product(props) {
         <Cost>₹ {price}</Cost>
       </Info>
       <Third>
-        <Button onClick={() => dispatch(addToCartWithCheck(props.item))}>
-          ADD TO CART
-        </Button>
+        {!isClicked ? (
+          <Button
+            onClick={() => {
+              dispatch(addToCartWithCheck(props.item));
+              setIsClicked(true);
+            }}
+          >
+            ADD TO CART
+          </Button>
+        ) : (
+          <Button
+            style={{ backgroundColor: "#333333" }}
+            onClick={() => {
+              dispatch(removeFromCart(props.item));
+              setIsClicked(false);
+            }}
+          >
+            ADDED TO CART
+          </Button>
+        )}
       </Third>
     </CompContainer>
   );
