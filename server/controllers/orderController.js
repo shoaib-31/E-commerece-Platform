@@ -5,9 +5,7 @@ const addUserOrder = async (req, res) => {
     const userId = req.id;
     const { cart } = req.body;
     const addedOrder = [];
-    console.log(cart);
     for (let i = 0; i < cart.length; i++) {
-      console.log(cart[i]);
       const { quantity, _id } = cart[i];
       productId = _id;
       const order = { userId, productId, quantity };
