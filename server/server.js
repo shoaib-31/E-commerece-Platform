@@ -12,7 +12,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
 const corsOptions = {
-  origin: "https://e-commerece-platform-9bee.vercel.app",
+  origin: "*",
   methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"],
   credentials: true,
 };
