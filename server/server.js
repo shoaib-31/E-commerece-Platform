@@ -24,15 +24,14 @@ const corsOptions = {
       callback(new Error("Not allowed by CORS"));
     }
   },
-  credentials: true, 
-  methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
+  credentials: true, // Allow credentials (cookies)
 };
 
 app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(bodyParser.json());
 dotenv.config();
-app.get("/",(req,res)=>{res.json("hello"});
+
 app.use("/user", userRoute);
 app.use("/products", productRoute);
 app.use("/orders", orderRoute);
