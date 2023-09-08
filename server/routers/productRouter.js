@@ -9,9 +9,16 @@ const {
   getAProduct,
   getCategory,
   searchProduct,
+  getAllProduct,
 } = require("../controllers/productController");
 
 router.get("/search", searchProduct);
+router.get(
+  "/getAll",
+  protectRoute,
+  isAdmin(["Admin", "BusinessOwner"]),
+  getAllProduct
+);
 router.get("/:id", getAProduct);
 router.get("/category/getCategory", getCategory);
 router.get("/category/:category", getProducts);

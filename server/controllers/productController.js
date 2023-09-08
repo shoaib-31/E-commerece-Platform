@@ -36,7 +36,17 @@ const getProducts = async function (req, res) {
 };
 const addProduct = async function (req, res) {
   try {
-    const newProduct = req.body;
+    let newProduct = req.body;
+    const oId = req.id;
+    if (req.body.thumbnail == "") {
+      const no =
+        "https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg";
+      newProduct = {
+        ...newProduct,
+        thumbnail: no,
+      };
+    }
+    newProduct = { ...newProduct, bussinessOwnerId: oId };
     const savedProduct = await Product.create(newProduct);
     res.status(201).json({
       message: "Product created successfully",
@@ -85,6 +95,16 @@ const deleteProduct = async function (req, res) {
     });
   }
 };
+const getAllProduct = async function (req, res) {
+  try {
+    const products = await Product.find();
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
 const searchProduct = async function (req, res) {
   try {
     const searchQuery = req.query.search;
@@ -106,4 +126,5 @@ module.exports = {
   getAProduct,
   getCategory,
   searchProduct,
+  getAllProduct,
 };

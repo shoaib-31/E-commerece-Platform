@@ -9,7 +9,7 @@ const Preloader = () => {
   );
 };
 const Loader = styled.div`
-  width: 60%;
+  width: 100%;
   height: 45rem;
   display: flex;
   justify-content: center;

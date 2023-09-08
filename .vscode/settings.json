@@ -1,4 +1,5 @@
 {
     "appService.defaultWebAppToDeploy": "undefined/subscriptions/39b3ee6e-38a6-4582-830f-210ca5cf6ced/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/ecommerce28",
-    "appService.deploySubpath": "server"
+    "appService.deploySubpath": "server",
+    "git.ignoreLimitWarning": true
 }

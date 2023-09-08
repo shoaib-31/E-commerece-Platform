@@ -20,11 +20,20 @@ const productSchema = new mongoose.Schema({
   category: {
     type: String,
     required: true,
+    enum: [
+      "Smartphones",
+      "Laptops",
+      "Skincare",
+      "Home-Decoration",
+      "Groceries",
+      "Fragrences",
+      "Shoes",
+      "Clothings",
+    ],
   },
   bussinessOwnerId: { type: String, required: true },
   thumbnail: {
     type: String,
-    required: true,
   },
 });
 

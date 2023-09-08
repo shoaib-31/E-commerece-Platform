@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import { styled } from "styled-components";
 import OrderComponent from "../Components/AccountPage/OrderComponent";
 import ProfileComponent from "../Components/AccountPage/ProfileComponent";
+import { useSelector } from "react-redux";
+import ManageProduct from "../Components/AccountPage/ManageProduct";
 
 const AccountPage = () => {
+  const { user } = useSelector((state) => state.user);
+  const role = user.role;
   const [Option, setOption] = useState("profile");
   return (
     <Container>
@@ -26,12 +30,25 @@ const AccountPage = () => {
         >
           Your Orders
         </Item>
+        {role == "Admin" && (
+          <Item
+            onClick={() => {
+              setOption("product");
+            }}
+            current="product"
+            active={Option}
+          >
+            Manage Products
+          </Item>
+        )}
       </List>
       <Options>
         {Option === "order" ? (
           <OrderComponent />
         ) : Option === "profile" ? (
           <ProfileComponent />
+        ) : Option === "product" ? (
+          <ManageProduct />
         ) : null}
       </Options>
     </Container>
