@@ -9,7 +9,6 @@ import { useParams, useNavigate } from "react-router-dom"; // Import useNavigate
 function ProducListPage() {
   const navigate = useNavigate(); // Get the navigate function
   const { category } = useParams();
-  console.log(category);
   const dispatch = useDispatch();
   const categories = [
     "Smartphones",
