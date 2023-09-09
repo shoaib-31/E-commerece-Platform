@@ -163,6 +163,7 @@ const Modal = styled.div`
   font-weight: 500;
   font-size: 1.5rem;
   padding: 1rem;
+  color: white;
   border-radius: 10px;
   transition-timing-function: ease-in;
   transition-duration: 1s;
