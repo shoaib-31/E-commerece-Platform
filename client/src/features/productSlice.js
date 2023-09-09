@@ -1,7 +1,7 @@
 // productSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { clientconfig } from "../../../clientconfig";
+import { clientconfig } from "../../clientconfig";
 const { url } = clientconfig;
 // Define an initial state
 const initialState = {
