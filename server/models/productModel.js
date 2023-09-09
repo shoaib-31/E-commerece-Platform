@@ -31,7 +31,7 @@ const productSchema = new mongoose.Schema({
       "Clothings",
     ],
   },
-  bussinessOwnerId: { type: String, required: true },
+  businessOwnerId: { type: String, required: true },
   thumbnail: {
     type: String,
   },

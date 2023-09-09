@@ -4,8 +4,8 @@ import { styled } from "styled-components";
 import { clientconfig } from "../../../clientconfig";
 import { useSelector, useDispatch } from "react-redux";
 import Preloader from "../Preloader";
-import ManageProductComponent from "./ManageProductComponent";
-import { setAllProducts } from "../../features/adminSlice";
+import ManageUserComponent from "./ManageUserComponent";
+import { setAllUsers } from "../../features/adminSlice";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import FormControl from "@mui/material/FormControl";
@@ -14,28 +14,23 @@ import Select from "@mui/material/Select";
 
 const { url } = clientconfig;
 
-function ManageProduct() {
+function ManageUser() {
+  const { token } = useSelector((state) => state.user.user);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
   const [refresh, setRefresh] = useState(false);
-  const categoryOptions = [
-    "Smartphones",
-    "Laptops",
-    "Skincare",
-    "Home-Decoration",
-    "Groceries",
-    "Fragrences",
-    "Shoes",
-    "Clothings",
-  ];
+  const roleOptions = ["User", "BusinessOwner", "Admin"];
+  const genderOptions = ["Male", "Female", "Others"];
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
-  const { token, role } = useSelector((state) => state.user.user);
   const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    price: "",
-    category: "",
-    thumbnail: "",
-    brand: "",
+    name: "",
+    email: "",
+    phoneNumber: "",
+    role: "",
+    gender: "",
+    password: "",
   });
 
   const handleOpenModal = () => {
@@ -55,9 +50,7 @@ function ManageProduct() {
     e.preventDefault();
 
     try {
-      const response = await axios.post(`${url}/products/`, formData, {
-        headers,
-      });
+      const response = await axios.post(`${url}/user/signup`, formData);
 
       console.log(
         "Form submitted successfully. Server response:",
@@ -66,12 +59,12 @@ function ManageProduct() {
 
       // Optionally, you can reset the form fields after successful submission
       setFormData({
-        title: "",
-        description: "",
-        price: "",
-        category: "",
-        thumbnail: "",
-        brand: "",
+        name: "",
+        email: "",
+        phoneNumber: "",
+        role: "",
+        gender: "",
+        password: "",
       });
       handleCloseModal();
       setRefresh(!refresh);
@@ -79,51 +72,33 @@ function ManageProduct() {
       console.error("Form submission failed:", error.message);
     }
   };
-
-  const headers = {
-    Authorization: `Bearer ${token}`,
-  };
-  const productData = useSelector((state) => state.admin.products);
+  const userData = useSelector((state) => state.admin.users);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    if (role == "Admin") {
-      axios
-        .get(`${url}/products/getAll/`, { headers })
-        .then((response) => {
-          dispatch(setAllProducts(response.data));
-        })
-        .catch((error) => {
-          console.error("Not Fetched", error.message);
-        });
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 500);
-    } else {
-      axios
-        .get(`${url}/products/business/all`, { headers })
-        .then((response) => {
-          dispatch(setAllProducts(response.data));
-        })
-        .catch((error) => {
-          console.error("Not Fetched", error.message);
-        });
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 500);
-    }
+    axios
+      .get(`${url}/user/getAll/`, { headers })
+      .then((response) => {
+        dispatch(setAllUsers(response.data));
+      })
+      .catch((error) => {
+        console.error("Not Fetched", error.message);
+      });
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
   }, [refresh]);
   return (
     <Container>
       <Add>
-        <Btn onClick={handleOpenModal}>Add a Product</Btn>
+        <Btn onClick={handleOpenModal}>Add a User</Btn>
       </Add>
       <Right>
         {isLoading ? (
           <Preloader />
         ) : (
-          productData.map((item) => {
+          userData.map((item) => {
             return (
-              <ManageProductComponent
+              <ManageUserComponent
                 item={item}
                 refresh={refresh}
                 setRefresh={setRefresh}
@@ -139,79 +114,87 @@ function ManageProduct() {
         aria-describedby="modal-description"
       >
         <FormContainer>
-          <FormHead id="modal-title">Add a Product</FormHead>
+          <FormHead id="modal-title">Add a User</FormHead>
           <Form onSubmit={handleSubmit}>
             <InputBox>
-              <Label htmlFor="productName">Name:</Label>
+              <Label htmlFor="name">Name:</Label>
               <Input
                 type="text"
-                id="title"
-                name="title"
-                value={formData.title}
+                id="name"
+                name="name"
+                value={formData.name}
                 onChange={handleInputChange}
               />
             </InputBox>
             <InputBox>
-              <Label htmlFor="productDescription">Description:</Label>
-              <TextArea
-                id="description"
-                name="description"
-                rows="3"
-                value={formData.description}
+              <Label htmlFor="email">Email:</Label>
+              <Input
+                type="text"
+                id="email"
+                name="email"
+                value={formData.email}
                 onChange={handleInputChange}
               />
             </InputBox>
             <InputBox>
-              <Label htmlFor="productName">Price:</Label>
+              <Label htmlFor="phoneNumber">Phone Number:</Label>
               <Input
                 type="number"
-                id="price"
-                name="price"
-                value={formData.price}
-                onChange={handleInputChange}
-              />
-            </InputBox>
-            <InputBox>
-              <Label htmlFor="productName">Brand:</Label>
-              <Input
-                type="text"
-                id="brand"
-                name="brand"
-                value={formData.brand}
-                onChange={handleInputChange}
-              />
-            </InputBox>
-            <InputBox>
-              <Label htmlFor="productName">
-                Image Link &#40;Optional&#41;:
-              </Label>
-              <Input
-                type="text"
-                id="thumbnail"
-                name="thumbnail"
-                value={formData.thumbnail}
+                id="phoneNumber"
+                name="phoneNumber"
+                value={formData.phoneNumber}
                 onChange={handleInputChange}
               />
             </InputBox>
             <InputBox>
               <FormControl variant="outlined">
-                <InputLabel htmlFor="category">Select a category</InputLabel>
+                <InputLabel htmlFor="gender">Select a Gender</InputLabel>
                 <Select
                   native
-                  id="category"
-                  name="category"
-                  value={formData.category}
+                  id="gender"
+                  name="gender"
+                  value={formData.gender}
                   onChange={handleInputChange}
-                  label="Select a category"
+                  label="Select a Gender"
                 >
                   <option aria-label="None" value="" />
-                  {categoryOptions.map((option) => (
+                  {genderOptions.map((option) => (
                     <option key={option} value={option}>
                       {option}
                     </option>
                   ))}
                 </Select>
               </FormControl>
+            </InputBox>
+            <InputBox>
+              <FormControl variant="outlined">
+                <InputLabel htmlFor="role">Select a Role</InputLabel>
+                <Select
+                  native
+                  id="role"
+                  name="role"
+                  value={formData.role}
+                  onChange={handleInputChange}
+                  label="Select a Role"
+                >
+                  <option aria-label="None" value="" />
+                  {roleOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </Select>
+              </FormControl>
+            </InputBox>
+            <InputBox>
+              <Label htmlFor="password">Password:</Label>
+              <Input
+                type="text"
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleInputChange}
+              />
             </InputBox>
 
             <ButtonBox>
@@ -325,4 +308,4 @@ const Btn = styled.button`
     background-color: #222333;
   }
 `;
-export default ManageProduct;
+export default ManageUser;

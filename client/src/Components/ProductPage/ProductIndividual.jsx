@@ -139,7 +139,7 @@ const Title = styled.div`
   font-family: "Fjalla One", sans-serif;
 `;
 const Description = styled.div`
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-family: "Poppins", sans-serif;
   width: 70%;
   font-weight: 300;

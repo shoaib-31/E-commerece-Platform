@@ -17,6 +17,7 @@ import { styled } from "styled-components";
 const { url, stripePublic } = clientconfig;
 const stripePromise = loadStripe(stripePublic);
 const PaymentForm = () => {
+  const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
   const [cardHolderName, setCardHolderName] = useState("");
   const { user } = useSelector((state) => state.user);
@@ -67,6 +68,7 @@ const PaymentForm = () => {
           { cart },
           { headers }
         );
+
         navigate("/");
         dispatch(clearCart());
         // Update your Redux state, e.g., mark the order as paid
@@ -122,6 +124,7 @@ const WrappedPaymentForm = () => {
     </Elements>
   );
 };
+
 const PayBox = styled.div`
   width: 20rem;
   margin: 20vh auto;

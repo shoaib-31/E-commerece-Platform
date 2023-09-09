@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { clientconfig } from "../../clientconfig";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const { url } = clientconfig;
 export const SignUp = () => {
   const navigate = useNavigate();
@@ -114,6 +114,14 @@ export const SignUp = () => {
               checked={formData.role === "BusinessOwner"}
               onChange={handleChange}
             />
+            <RadioLabel>Admin</RadioLabel>
+            <RadioInput
+              type="radio"
+              name="role"
+              value="Admin"
+              checked={formData.role === "Admin"}
+              onChange={handleChange}
+            />
             <RadioLabel>Business Owner</RadioLabel>
           </RoleRadioContainer>
           <Input
@@ -135,11 +143,17 @@ export const SignUp = () => {
           {error && <ErrorMessage>{error}</ErrorMessage>}
           <SubmitButton type="submit">Sign Up</SubmitButton>
         </SignupForm>
+        <Register to="/login">Already have an account?</Register>
       </Box>
     </SignupContainer>
   );
 };
-
+const Register = styled(Link)`
+  font-size: 0.8rem;
+  margin-top: 10px;
+  text-align: right;
+  color: black;
+`;
 const Modal = styled.div`
   position: absolute;
   z-index: 2;
@@ -192,6 +206,7 @@ const Input = styled.input`
   border: 1px solid gray;
   padding: 0.5rem;
   border-radius: 5px;
+  width: 100%;
 `;
 
 const GenderRadioContainer = styled.div`
@@ -223,10 +238,18 @@ const ErrorMessage = styled.div`
 `;
 
 const SubmitButton = styled.button`
-  margin-top: 20px;
-  padding: 10px;
-  background-color: #007bff;
-  color: #fff;
+  font-size: 1.3rem;
+  font-family: "Poppins", sans-serif;
+  background-color: black;
   border: none;
   border-radius: 5px;
+  padding: 0.5rem;
+  width: 100%;
+  transition-timing-function: ease-in;
+  transition-duration: 0.4s;
+  transition-delay: 0.3s;
+  cursor: pointer;
+  &:hover {
+    background-color: #222222;
+  }
 `;

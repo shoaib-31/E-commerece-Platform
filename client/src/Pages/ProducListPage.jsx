@@ -5,18 +5,30 @@ import Product from "../Components/ProductListPage/Product";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { fetchProducts } from "../features/productSlice";
 import Preloader from "../Components/Preloader";
-import axios from "axios";
-import { useParams } from "react-router-dom";
-import { clientconfig } from "../../clientconfig";
+import { useParams, useNavigate } from "react-router-dom"; // Import useNavigate
 function ProducListPage() {
+  const navigate = useNavigate(); // Get the navigate function
   const { category } = useParams();
+  console.log(category);
   const dispatch = useDispatch();
-  const [categories, setCategories] = useState([]);
-  const [selectedOption, setSelectedOption] = useState(category);
+  const categories = [
+    "Smartphones",
+    "Laptops",
+    "Skincare",
+    "Home-Decoration",
+    "Groceries",
+    "Fragrences",
+    "Shoes",
+    "Clothings",
+  ];
   const { products, status, error } = useSelector((state) => state.products);
-  const { url } = clientconfig;
+  const [selectedOption, setSelectedOption] = useState(category);
   const handleChange = (event) => {
-    setSelectedOption(event.target.value);
+    const newCategory = event.target.value;
+    setSelectedOption(newCategory);
+
+    // Update the URL parameter when the Select value changes
+    navigate(`/product/${newCategory}`);
   };
   function toTitleCase(str) {
     return str
@@ -26,14 +38,6 @@ function ProducListPage() {
       .join(" ");
   }
   useEffect(() => {
-    axios
-      .get(`${url}/products/category/getCategory`)
-      .then((response) => {
-        setCategories(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data: ", error);
-      });
     dispatch(fetchProducts(selectedOption));
   }, [dispatch, selectedOption]);
 
@@ -49,9 +53,7 @@ function ProducListPage() {
             onChange={handleChange}
           >
             {categories.map((category) => {
-              return (
-                <MenuItem value={category}>{toTitleCase(category)}</MenuItem>
-              );
+              return <MenuItem value={category}>{category}</MenuItem>;
             })}
           </Select>
         </FormControl>
@@ -60,6 +62,10 @@ function ProducListPage() {
         <Preloader />
       ) : status === "failed" ? (
         <div>Error: {error}</div>
+      ) : products.length == 0 ? (
+        <Products>
+          <No>No products related to {selectedOption} category found.</No>
+        </Products>
       ) : (
         <Products>
           {products.map((item) => (
@@ -70,6 +76,17 @@ function ProducListPage() {
     </Container>
   );
 }
+const No = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  color: gray;
+`;
 const Container = styled.div`
   width: 100%;
   height: fit-content;

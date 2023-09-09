@@ -2,11 +2,27 @@ import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { clientconfig } from "../../../clientconfig";
 import axios from "axios";
+import { useSelector } from "react-redux";
 const { url } = clientconfig;
 function OrderItem(props) {
   const [title, setTitle] = useState("");
   const [thumbnail, setThumbnail] = useState("");
-  const { productId, quantity, status } = props.item;
+  const { productId, quantity, status, _id } = props.item;
+  const { token } = useSelector((state) => state.user.user);
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+  const handleClick = () => {
+    axios
+      .patch(`${url}/orders/${_id}`, {}, { headers }) // Pass an empty object as the request data
+      .then(() => {
+        props.setRefresh(!props.refresh);
+      })
+      .catch((error) => {
+        console.error("Error canceling order:", error);
+      });
+  };
+
   useEffect(() => {
     axios
       .get(`${url}/products/${productId}`)
@@ -31,9 +47,26 @@ function OrderItem(props) {
       <Quantity>
         Quantity:<span>{quantity}</span>
       </Quantity>
+      <Button onClick={handleClick}>Cancel</Button>
     </Container>
   );
 }
+const Button = styled.button`
+  width: 10rem;
+  height: 3rem;
+  border: none;
+  margin-right: 1rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+  background-color: #000;
+  transition-timing-function: ease-out;
+  transition-duration: 100ms;
+  &:hover {
+    background-color: #222333;
+  }
+`;
 const Container = styled.div`
   width: 100%;
   height: 6rem;
@@ -46,7 +79,7 @@ const Container = styled.div`
   border: 1px solid #000;
 `;
 const Quantity = styled.div`
-  width: 20%;
+  width: 10%;
   display: flex;
   flex-direction: column;
   font-size: 1.1rem;
@@ -55,7 +88,7 @@ const Quantity = styled.div`
   font-family: "Poppins", sans-serif;
 `;
 const Mid = styled.div`
-  width: 60%;
+  width: 50%;
   height: 5rem;
   display: flex;
   flex-direction: column;

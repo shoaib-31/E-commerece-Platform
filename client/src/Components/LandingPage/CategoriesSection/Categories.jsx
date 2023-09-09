@@ -11,7 +11,7 @@ function Categories() {
       <CategoriesBox>
         {CategoriesData.map((category) => {
           return (
-            <Category to={`/product/${category.link}`}>
+            <Category to={`/product/${category.name}`}>
               <CategoryImg src={category.image} />
               <CategoryName>{category.name}</CategoryName>
             </Category>

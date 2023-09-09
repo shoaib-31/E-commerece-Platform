@@ -46,7 +46,7 @@ const addProduct = async function (req, res) {
         thumbnail: no,
       };
     }
-    newProduct = { ...newProduct, bussinessOwnerId: oId };
+    newProduct = { ...newProduct, businessOwnerId: oId };
     const savedProduct = await Product.create(newProduct);
     res.status(201).json({
       message: "Product created successfully",
@@ -59,14 +59,23 @@ const addProduct = async function (req, res) {
 };
 const updateProduct = async function (req, res) {
   try {
-    const dataToBeUpdated = req.body;
+    let dataToBeUpdated = req.body;
     const { id } = req.params;
     const productToBeUpdated = await Product.findById(id);
+
     if (!productToBeUpdated) {
       return res.status(404).json({ message: "Product not found" });
     }
-    const newData = { ...productToBeUpdated, ...dataToBeUpdated };
-    productToBeUpdated.set(newData);
+    if (req.body.thumbnail == "") {
+      const no =
+        "https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg";
+      dataToBeUpdated = {
+        ...dataToBeUpdated,
+        thumbnail: no,
+      };
+    }
+    dataToBeUpdated = { ...productToBeUpdated, ...dataToBeUpdated };
+    productToBeUpdated.set(dataToBeUpdated);
     await productToBeUpdated.save();
     res.status(201).json({
       message: "Product updated successfully",
@@ -115,7 +124,18 @@ const searchProduct = async function (req, res) {
     res.json(products);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal server error hi" });
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+const getProductsfromBusiness = async function (req, res) {
+  try {
+    const businessOwnerId = req.id;
+    const products = await Product.find({ businessOwnerId });
+
+    res.json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error " });
   }
 };
 module.exports = {
@@ -127,4 +147,5 @@ module.exports = {
   getCategory,
   searchProduct,
   getAllProduct,
+  getProductsfromBusiness,
 };

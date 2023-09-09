@@ -4,6 +4,8 @@ import OrderComponent from "../Components/AccountPage/OrderComponent";
 import ProfileComponent from "../Components/AccountPage/ProfileComponent";
 import { useSelector } from "react-redux";
 import ManageProduct from "../Components/AccountPage/ManageProduct";
+import ManageUser from "../Components/AccountPage/ManageUser";
+import OrderedComponent from "../Components/AccountPage/OrderedItem";
 
 const AccountPage = () => {
   const { user } = useSelector((state) => state.user);
@@ -31,15 +33,39 @@ const AccountPage = () => {
           Your Orders
         </Item>
         {role == "Admin" && (
-          <Item
-            onClick={() => {
-              setOption("product");
-            }}
-            current="product"
-            active={Option}
-          >
-            Manage Products
-          </Item>
+          <>
+            <Item
+              onClick={() => {
+                setOption("user");
+              }}
+              current="user"
+              active={Option}
+            >
+              Manage Users
+            </Item>
+          </>
+        )}
+        {(role == "Admin" || role == "BusinessOwner") && (
+          <>
+            <Item
+              onClick={() => {
+                setOption("product");
+              }}
+              current="product"
+              active={Option}
+            >
+              Manage Products
+            </Item>
+            <Item
+              onClick={() => {
+                setOption("ordered");
+              }}
+              current="ordered"
+              active={Option}
+            >
+              Ordered Products
+            </Item>
+          </>
         )}
       </List>
       <Options>
@@ -49,6 +75,10 @@ const AccountPage = () => {
           <ProfileComponent />
         ) : Option === "product" ? (
           <ManageProduct />
+        ) : Option === "user" ? (
+          <ManageUser />
+        ) : Option === "ordered" ? (
+          <OrderedComponent />
         ) : null}
       </Options>
     </Container>

@@ -6,9 +6,9 @@ const addUserOrder = async (req, res) => {
     const { cart } = req.body;
     const addedOrder = [];
     for (let i = 0; i < cart.length; i++) {
-      const { quantity, _id } = cart[i];
+      const { quantity, _id, businessOwnerId } = cart[i];
       productId = _id;
-      const order = { userId, productId, quantity };
+      const order = { userId, productId, quantity, businessOwnerId };
       addedOrder.push(await Order.create(order));
     }
     res.status(201).json({
@@ -84,10 +84,29 @@ const deleteOrder = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+const getBusiness = async (req, res) => {
+  try {
+    const businessOwnerId = req.id;
+    const order = await Order.find({ businessOwnerId });
+    res.status(200).json(order);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+const getAll = async (req, res) => {
+  try {
+    const order = await Order.find();
+    res.status(200).json(order);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 module.exports = {
   addUserOrder,
   getUserOrders,
   cancelOrder,
   updateOrder,
   deleteOrder,
+  getBusiness,
+  getAll,
 };

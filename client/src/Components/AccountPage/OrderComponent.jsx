@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import Preloader from "../Preloader";
 const { url } = clientconfig;
 function OrderComponent() {
+  const [refresh, setRefresh] = useState(false);
   const { token } = useSelector((state) => state.user.user);
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -29,13 +30,15 @@ function OrderComponent() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+  }, [refresh]);
   return (
     <Container>
       {isLoading ? (
         <Preloader />
       ) : data.length ? (
-        data.map((obj) => <OrderItem item={obj} />)
+        data.map((obj) => (
+          <OrderItem refresh={refresh} setRefresh={setRefresh} item={obj} />
+        ))
       ) : (
         <No>You have not ordered yet.</No>
       )}

@@ -4,43 +4,33 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { clientconfig } from "../../../clientconfig";
-import { removeFromProducts } from "../../features/adminSlice";
+import { removeFromUsers } from "../../features/adminSlice";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
-function ManageProductComponent(props) {
+function ManageUserComponent(props) {
   useEffect(() => {}, [props.refresh]);
   const { url } = clientconfig;
   const dispatch = useDispatch();
-  const { _id, thumbnail, title, price, category, description, brand } =
-    props.item;
-  const dynamicURL = `/product/${category}/${_id}`;
+  const { _id, name, email, phoneNumber, gender, role, password } = props.item;
   function handleDelete() {
-    axios.delete(`${url}/products/${_id}`, { headers }).then(() => {
-      dispatch(removeFromProducts(_id));
+    axios.delete(`${url}/user/email/${email}`, { headers }).then(() => {
+      dispatch(removeFromUsers(_id));
       props.setRefresh(!props.refresh);
     });
   }
-  const categoryOptions = [
-    "Smartphones",
-    "Laptops",
-    "Skincare",
-    "Home-Decoration",
-    "Groceries",
-    "Fragrences",
-    "Shoes",
-    "Clothings",
-  ];
+  const roleOptions = ["User", "BusinessOwner", "Admin"];
+  const genderOptions = ["Male", "Female", "Others"];
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
-    title: title,
-    description: description,
-    price: price,
-    category: category,
-    thumbnail: thumbnail,
-    brand: brand,
+    name: name,
+    email: email,
+    phoneNumber: phoneNumber,
+    gender: gender,
+    role: role,
+    password: password,
   });
 
   const handleOpenModal = () => {
@@ -60,9 +50,13 @@ function ManageProductComponent(props) {
     e.preventDefault();
 
     try {
-      const response = await axios.patch(`${url}/products/${_id}`, formData, {
-        headers,
-      });
+      const response = await axios.patch(
+        `${url}/user/email/${email}`,
+        formData,
+        {
+          headers,
+        }
+      );
 
       console.log(
         "Form submitted successfully. Server response:",
@@ -82,10 +76,12 @@ function ManageProductComponent(props) {
   };
   return (
     <CompContainer>
-      <Image src={thumbnail} />
-      <Info to={dynamicURL}>
-        <Name>{title}</Name>
-        <Cost>₹ {price}</Cost>
+      <Name>{name}</Name>
+      <Info>
+        <Small>E-mail: {email}</Small>
+        <Small>Phone Number: {phoneNumber}</Small>
+        <Small>Gender: {gender}</Small>
+        <Small>Role: {role}</Small>
       </Info>
       <Third>
         <Button onClick={handleOpenModal}>Update</Button>
@@ -98,79 +94,89 @@ function ManageProductComponent(props) {
         aria-describedby="modal-description"
       >
         <FormContainer>
-          <FormHead id="modal-title">Update Product</FormHead>
+          <FormHead id="modal-title">Update User</FormHead>
           <Form onSubmit={handleSubmit}>
             <InputBox>
-              <Label htmlFor="productName">Name:</Label>
+              <Label htmlFor="name">Name:</Label>
               <Input
                 type="text"
-                id="title"
-                name="title"
-                value={formData.title}
+                id="name"
+                name="name"
+                value={formData.name}
                 onChange={handleInputChange}
               />
             </InputBox>
             <InputBox>
-              <Label htmlFor="productDescription">Description:</Label>
-              <TextArea
-                id="description"
-                name="description"
-                rows="3"
-                value={formData.description}
+              <Label htmlFor="email">E-mail:</Label>
+              <Input
+                type="text"
+                id="email"
+                name="email"
+                value={formData.email}
                 onChange={handleInputChange}
               />
             </InputBox>
+
             <InputBox>
-              <Label htmlFor="productName">Price:</Label>
+              <Label htmlFor="phoneNumber">Phone Number:</Label>
               <Input
                 type="number"
-                id="price"
-                name="price"
-                value={formData.price}
+                id="phoneNumber"
+                name="phoneNumber"
+                value={formData.phoneNumber}
                 onChange={handleInputChange}
               />
             </InputBox>
-            <InputBox>
-              <Label htmlFor="productName">Brand:</Label>
-              <Input
-                type="text"
-                id="brand"
-                name="brand"
-                value={formData.brand}
-                onChange={handleInputChange}
-              />
-            </InputBox>
-            <InputBox>
-              <Label htmlFor="productName">
-                Image Link &#40;Optional&#41;:
-              </Label>
-              <Input
-                type="text"
-                id="thumbnail"
-                name="thumbnail"
-                value={formData.thumbnail}
-                onChange={handleInputChange}
-              />
-            </InputBox>
+
             <InputBox>
               <FormControl variant="outlined">
-                <InputLabel htmlFor="category">Select a category</InputLabel>
+                <InputLabel htmlFor="gender">Select a Gender</InputLabel>
                 <Select
                   native
-                  id="category"
-                  name="category"
-                  value={formData.category}
+                  id="gender"
+                  name="gender"
+                  value={formData.gender}
                   onChange={handleInputChange}
-                  label="Select a category"
+                  label="Select a Gender"
                 >
                   <option aria-label="None" value="" />
-                  {categoryOptions.map((option) => (
+                  {genderOptions.map((option) => (
                     <option key={option} value={option}>
                       {option}
                     </option>
                   ))}
                 </Select>
               </FormControl>
+            </InputBox>
+            <InputBox>
+              <FormControl variant="outlined">
+                <InputLabel htmlFor="role">Select a Role</InputLabel>
+                <Select
+                  native
+                  id="role"
+                  name="role"
+                  value={formData.role}
+                  onChange={handleInputChange}
+                  label="Select a Role"
+                >
+                  <option aria-label="None" value="" />
+                  {roleOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </Select>
+              </FormControl>
+            </InputBox>
+            <InputBox>
+              <Label htmlFor="password">Password:</Label>
+              <Input
+                type="password"
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleInputChange}
+              />
             </InputBox>
 
             <ButtonBox>
@@ -271,45 +277,32 @@ const Input = styled.input`
   background-color: white;
   color: black;
 `;
-
-const TextArea = styled.textarea`
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: white;
-  color: black;
-  font-family: "Poppins", sans-serif;
-  font-size: 1rem;
-`;
 const StyledModal = styled(Modal)`
   display: flex;
   align-items: center;
   justify-content: center;
 `;
-const Image = styled.img`
-  height: 90%;
-  border-radius: 5px;
-  aspect-ratio: 1;
-`;
+
 const Info = styled(Link)`
   display: flex;
-  width: 70%;
-  height: 55%;
+  width: 55%;
+  flex-wrap: wrap;
   text-decoration: none;
-  flex-direction: column;
   justify-content: space-evenly;
   align-items: flex-start;
 `;
 const Name = styled.div`
-  font-size: 20px;
+  font-size: 1.5rem;
   font-weight: 600;
+  width: 25%;
   color: black;
   font-family: "Fjalla One", sans-serif;
 `;
-const Cost = styled.div`
+const Small = styled.div`
   font-size: 17px;
   font-weight: 500;
   color: black;
+  width: 18rem;
 `;
 const Button = styled.button`
   width: 6rem;
@@ -327,4 +320,4 @@ const Button = styled.button`
     background-color: #222333;
   }
 `;
-export default ManageProductComponent;
+export default ManageUserComponent;

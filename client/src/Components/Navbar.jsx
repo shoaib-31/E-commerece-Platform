@@ -92,7 +92,11 @@ const Navbar = () => {
                   <span>
                     <FaGear />
                   </span>{" "}
-                  Your Account
+                  {user.role === "Admin"
+                    ? "Manage Website"
+                    : user.role === "BusinessOwner"
+                    ? "Manage Products"
+                    : "Your Account"}
                 </PopItem>
                 <PopItem show={isPopover} onClick={handleLogout}>
                   <span>
@@ -164,6 +168,7 @@ const Profile = styled.div`
 `;
 const PopItem = styled(Link)`
   text-decoration: none;
+  width: fit-content;
   color: white;
   display: ${(props) => (props.show ? "block" : "none")};
   &:hover {
@@ -176,7 +181,7 @@ const Popover = styled.div`
   background-color: #272727;
   border-radius: 5px;
   top: 2.5rem;
-  width: 10rem;
+  width: 12rem;
   height: ${(props) => (props.show ? "3rem" : "0rem")};
   color: white;
   transition-timing-function: ease-out;

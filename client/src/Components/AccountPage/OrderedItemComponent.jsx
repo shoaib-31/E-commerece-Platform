@@ -1,46 +1,43 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { clientconfig } from "../../../clientconfig";
-import { removeFromProducts } from "../../features/adminSlice";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
-function ManageProductComponent(props) {
-  useEffect(() => {}, [props.refresh]);
+function OrderedItemComponent(props) {
+  const [product, setProduct] = useState(null);
+  const { _id, status, quantity, productId } = props.item;
+  useEffect(() => {
+    axios.get(`${url}/products/${productId}`).then((response) => {
+      setProduct(response.data);
+    });
+  }, [props.refresh]);
   const { url } = clientconfig;
-  const dispatch = useDispatch();
-  const { _id, thumbnail, title, price, category, description, brand } =
-    props.item;
-  const dynamicURL = `/product/${category}/${_id}`;
+  const thumbnail = product ? product.thumbnail : "";
+  const title = product ? product.title : "";
+  const price = product ? product.price : "";
   function handleDelete() {
-    axios.delete(`${url}/products/${_id}`, { headers }).then(() => {
-      dispatch(removeFromProducts(_id));
+    axios.delete(`${url}/orders/super/${_id}`, { headers }).then(() => {
       props.setRefresh(!props.refresh);
     });
   }
-  const categoryOptions = [
-    "Smartphones",
-    "Laptops",
-    "Skincare",
-    "Home-Decoration",
-    "Groceries",
-    "Fragrences",
-    "Shoes",
-    "Clothings",
+  const statusOptions = [
+    "Not Dispatched Yet",
+    "Processing",
+    "Shipped",
+    "Delivered",
+    "Cancelled",
+    "Payment Failed",
+    "Pending",
   ];
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
-    title: title,
-    description: description,
-    price: price,
-    category: category,
-    thumbnail: thumbnail,
-    brand: brand,
+    status: status,
   });
 
   const handleOpenModal = () => {
@@ -60,9 +57,13 @@ function ManageProductComponent(props) {
     e.preventDefault();
 
     try {
-      const response = await axios.patch(`${url}/products/${_id}`, formData, {
-        headers,
-      });
+      const response = await axios.patch(
+        `${url}/orders/upper/${_id}`,
+        formData,
+        {
+          headers,
+        }
+      );
 
       console.log(
         "Form submitted successfully. Server response:",
@@ -76,20 +77,24 @@ function ManageProductComponent(props) {
       console.error("Form submission failed:", error.message);
     }
   };
-  const { token } = useSelector((state) => state.user.user);
+  const { token, role } = useSelector((state) => state.user.user);
   const headers = {
     Authorization: `Bearer ${token}`,
   };
   return (
     <CompContainer>
       <Image src={thumbnail} />
-      <Info to={dynamicURL}>
+      <Info>
         <Name>{title}</Name>
         <Cost>₹ {price}</Cost>
+        <Status>
+          <span style={{ color: "black" }}>Status:</span>
+          {status}
+        </Status>
       </Info>
       <Third>
         <Button onClick={handleOpenModal}>Update</Button>
-        <Button onClick={handleDelete}>Delete</Button>
+        {role == "Admin" && <Button onClick={handleDelete}>Delete</Button>}
       </Third>
       <StyledModal
         open={isModalOpen}
@@ -98,73 +103,21 @@ function ManageProductComponent(props) {
         aria-describedby="modal-description"
       >
         <FormContainer>
-          <FormHead id="modal-title">Update Product</FormHead>
+          <FormHead id="modal-title">Update Order Status</FormHead>
           <Form onSubmit={handleSubmit}>
             <InputBox>
-              <Label htmlFor="productName">Name:</Label>
-              <Input
-                type="text"
-                id="title"
-                name="title"
-                value={formData.title}
-                onChange={handleInputChange}
-              />
-            </InputBox>
-            <InputBox>
-              <Label htmlFor="productDescription">Description:</Label>
-              <TextArea
-                id="description"
-                name="description"
-                rows="3"
-                value={formData.description}
-                onChange={handleInputChange}
-              />
-            </InputBox>
-            <InputBox>
-              <Label htmlFor="productName">Price:</Label>
-              <Input
-                type="number"
-                id="price"
-                name="price"
-                value={formData.price}
-                onChange={handleInputChange}
-              />
-            </InputBox>
-            <InputBox>
-              <Label htmlFor="productName">Brand:</Label>
-              <Input
-                type="text"
-                id="brand"
-                name="brand"
-                value={formData.brand}
-                onChange={handleInputChange}
-              />
-            </InputBox>
-            <InputBox>
-              <Label htmlFor="productName">
-                Image Link &#40;Optional&#41;:
-              </Label>
-              <Input
-                type="text"
-                id="thumbnail"
-                name="thumbnail"
-                value={formData.thumbnail}
-                onChange={handleInputChange}
-              />
-            </InputBox>
-            <InputBox>
               <FormControl variant="outlined">
-                <InputLabel htmlFor="category">Select a category</InputLabel>
+                <InputLabel htmlFor="status">Select a status</InputLabel>
                 <Select
                   native
-                  id="category"
-                  name="category"
-                  value={formData.category}
+                  id="status"
+                  name="status"
+                  value={formData.status}
                   onChange={handleInputChange}
-                  label="Select a category"
+                  label="Select a status"
                 >
                   <option aria-label="None" value="" />
-                  {categoryOptions.map((option) => (
+                  {statusOptions.map((option) => (
                     <option key={option} value={option}>
                       {option}
                     </option>
@@ -190,6 +143,12 @@ const ButtonBox = styled.div`
   width: 100%;
   gap: 1rem;
   justify-content: flex-end;
+`;
+const Status = styled.div`
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #53c522;
+  font-family: "Poppins", sans-serif;
 `;
 const Btn = styled.button`
   width: 10rem;
@@ -222,6 +181,7 @@ const CompContainer = styled.div`
   gap: 1rem;
   justify-content: flex-start;
   border-radius: 10px;
+  width: 100%;
   border: 1px solid transparent;
   &:hover {
     background-color: #f2f0f0;
@@ -251,35 +211,10 @@ const Form = styled.form`
   gap: 1rem;
 `;
 
-const Label = styled.label`
-  font-weight: 500;
-  font-size: 1.4rem;
-  font-family: "Fjalla One", sans-serif;
-  margin: 5px 0;
-`;
 const FormHead = styled.div`
   font-size: 2rem;
   font-family: "Fjalla One", sans-serif;
   text-align: center;
-`;
-const Input = styled.input`
-  font-family: "Poppins", sans-serif;
-  font-size: 1rem;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: white;
-  color: black;
-`;
-
-const TextArea = styled.textarea`
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: white;
-  color: black;
-  font-family: "Poppins", sans-serif;
-  font-size: 1rem;
 `;
 const StyledModal = styled(Modal)`
   display: flex;
@@ -327,4 +262,4 @@ const Button = styled.button`
     background-color: #222333;
   }
 `;
-export default ManageProductComponent;
+export default OrderedItemComponent;

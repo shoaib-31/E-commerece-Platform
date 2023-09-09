@@ -11,42 +11,34 @@ const CategoriesData = [
   {
     name: "Smartphones",
     image: smartphones,
-    link: "smartphones",
   },
   {
-    name: "Laptop",
+    name: "Laptops",
     image: laptops,
-    link: "laptops",
   },
   {
     name: "Skincare",
     image: skincare,
-    link: "skincare",
   },
   {
     name: "Home-Decoration",
     image: homeDeco,
-    link: "home-decoration",
   },
   {
     name: "Groceries",
     image: grocery,
-    link: "groceries",
   },
   {
     name: "Fragrences",
     image: frag,
-    link: "fragrances",
   },
   {
     name: "Shoes",
     image: shoes,
-    link: "shoes",
   },
   {
     name: "Clothings",
     image: clothing,
-    link: "clothing",
   },
 ];
 
