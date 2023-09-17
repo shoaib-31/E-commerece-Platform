@@ -33,9 +33,9 @@ const Carousel = () => {
   return (
     <CarouselContainer>
       <Slider {...settings}>
-        {CarouselData.map((data) => {
+        {CarouselData.map((data, index) => {
           return (
-            <ImageContainer>
+            <ImageContainer key={index}>
               <Img src={data.img} />
             </ImageContainer>
           );
