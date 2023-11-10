@@ -213,6 +213,7 @@ const ButtonBox = styled.div`
   display: flex;
   width: 100%;
   gap: 1rem;
+  height: fit-content;
   justify-content: flex-end;
 `;
 const FormContainer = styled(Box)`
@@ -225,6 +226,13 @@ const FormContainer = styled(Box)`
   box-shadow: 24px;
   border-radius: 1rem;
   padding: 2rem;
+  @media (max-width: 1000px) {
+    width: 80%;
+  }
+  @media (max-height: 800px) {
+    height: 80%;
+    overflow-y: scroll;
+  }
 `;
 const InputBox = styled.div`
   display: flex;
@@ -243,6 +251,9 @@ const Label = styled.label`
   font-size: 1.4rem;
   font-family: "Fjalla One", sans-serif;
   margin: 5px 0;
+  @media (max-width: 450px) {
+    font-size: 1.2rem;
+  }
 `;
 const FormHead = styled.div`
   font-size: 2rem;
@@ -259,15 +270,6 @@ const Input = styled.input`
   color: black;
 `;
 
-const TextArea = styled.textarea`
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: white;
-  color: black;
-  font-family: "Poppins", sans-serif;
-  font-size: 1rem;
-`;
 const StyledModal = styled(Modal)`
   display: flex;
   align-items: center;
@@ -282,10 +284,25 @@ const Container = styled.div`
   align-items: center;
 `;
 const Right = styled.div`
-  overflow-y: scroll;
+  overflow-y: auto;
+  max-height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: darkgray;
+    border-radius: 6px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: gray;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: lightgray;
+    border-radius: 10px;
+  }
 `;
 const Add = styled.div`
   width: 100%;
@@ -306,6 +323,9 @@ const Btn = styled.button`
   transition-duration: 100ms;
   &:hover {
     background-color: #222333;
+  }
+  @media (max-width: 600px) {
+    width: 6rem;
   }
 `;
 export default ManageUser;

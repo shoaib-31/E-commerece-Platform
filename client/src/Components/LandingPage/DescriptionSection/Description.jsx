@@ -40,8 +40,7 @@ function Description() {
   );
 }
 const Container = styled.div`
-  max-width: 1700px;
-  width: 100%;
+  width: 90%;
   height: fit-content;
   background-color: #ececec;
   margin-top: 1rem;
@@ -49,12 +48,13 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem;
+  border-radius: 20px;
 `;
 const Info = styled.div`
   width: 98%;
   font-size: 0.8rem;
   color: #676767;
+  margin-bottom: 1rem;
 `;
 const Head = styled.div`
   width: 98%;
@@ -62,5 +62,6 @@ const Head = styled.div`
   margin: 5px 0;
   font-weight: 600;
   color: #676760;
+  margin-top: 1rem;
 `;
 export default Description;

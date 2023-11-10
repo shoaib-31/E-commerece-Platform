@@ -92,6 +92,9 @@ const FormContainer = styled.div`
   width: 90%;
   padding: 20px;
   border: none;
+  @media (max-width: 750px) {
+    padding: 0;
+  }
 `;
 
 const FormGroup = styled.div`
@@ -121,7 +124,7 @@ const Input = styled.input`
 `;
 
 const Select = styled.select`
-  width: 10%;
+  width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 3px;

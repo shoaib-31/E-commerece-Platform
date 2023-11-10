@@ -6,6 +6,9 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../features/userSlice";
 import { clearCart } from "../features/cartSlice";
+import MediaQuery from "react-responsive";
+import { FaBars } from "react-icons/fa6";
+import { FaXmark } from "react-icons/fa6";
 import {
   FaAngleUp,
   FaCartShopping,
@@ -15,15 +18,19 @@ import {
   FaMagnifyingGlass,
 } from "react-icons/fa6";
 import { clientconfig } from "../../clientconfig";
+import SideBar from "./SideBar";
 const { url } = clientconfig;
 
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const { user } = useSelector((state) => state.user);
   const [isPopover, setIsPopover] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch(); // Initialize useDispatch
-
+  const dispatch = useDispatch();
+  const handleClose = () => {
+    setIsClicked(false);
+  };
   const handleLogout = () => {
     const token = user.token;
     const headers = {
@@ -32,13 +39,11 @@ const Navbar = () => {
     axios
       .get(`${url}/user/logout`, { headers })
       .then((response) => {
-        // Redirect the user to the desired route after logout
-        navigate("/"); // Replace '/login' with the desired logout destination
+        navigate("/");
         dispatch(clearCart());
         dispatch(logout());
       })
       .catch((error) => {
-        // Handle any errors that occurred during logout
         console.error("Logout error:", error.message);
       });
   };
@@ -58,6 +63,9 @@ const Navbar = () => {
   }, []);
   return (
     <Main>
+      <MediaQuery maxWidth={460}>
+        <LogoSmall to="/">AtoZ</LogoSmall>
+      </MediaQuery>
       <NavbarContainer>
         <Logo to="/">AtoZ</Logo>
         <Search>
@@ -74,48 +82,69 @@ const Navbar = () => {
             style={{ cursor: "pointer" }}
           />
         </Search>
-        {user ? (
-          <NavigationLinks>
-            <Profile
-              onClick={() => {
-                event.stopPropagation();
-                setIsPopover(!isPopover);
-              }}
-            >
-              <FaUser />
-              {user.name}
-              <Arrow show={isPopover}>
-                <FaAngleUp />
-              </Arrow>
-              <Popover show={isPopover} ref={popoverRef}>
-                <PopItem show={isPopover} to="/account">
-                  <span>
-                    <FaGear />
-                  </span>{" "}
-                  {user.role === "Admin"
-                    ? "Manage Website"
-                    : user.role === "BusinessOwner"
-                    ? "Manage Products"
-                    : "Your Account"}
-                </PopItem>
-                <PopItem show={isPopover} onClick={handleLogout}>
-                  <span>
-                    <FaPowerOff />
-                  </span>{" "}
-                  Log Out
-                </PopItem>
-              </Popover>
-            </Profile>
+        <MediaQuery minWidth={1001}>
+          {user ? (
+            <NavigationLinks>
+              <Profile
+                onClick={() => {
+                  event.stopPropagation();
+                  setIsPopover(!isPopover);
+                }}
+              >
+                <FaUser />
+                {user.name}
+                <Arrow show={isPopover}>
+                  <FaAngleUp />
+                </Arrow>
+                <Popover show={isPopover} ref={popoverRef}>
+                  <PopItem show={isPopover} to="/account">
+                    <span>
+                      <FaGear />
+                    </span>{" "}
+                    {user.role === "Admin"
+                      ? "Manage Website"
+                      : user.role === "BusinessOwner"
+                      ? "Manage Products"
+                      : "Your Account"}
+                  </PopItem>
+                  <PopItem show={isPopover} onClick={handleLogout}>
+                    <span>
+                      <FaPowerOff />
+                    </span>{" "}
+                    Log Out
+                  </PopItem>
+                </Popover>
+              </Profile>
 
-            <CartNav>
-              <FaCartShopping />
-              <StyledLink to="/cart">Cart</StyledLink>
-            </CartNav>
-          </NavigationLinks>
-        ) : (
-          <Login to="/login">Login/Signup</Login>
-        )}
+              <CartNav>
+                <FaCartShopping />
+                <StyledLink to="/cart">Cart</StyledLink>
+              </CartNav>
+            </NavigationLinks>
+          ) : (
+            <Login to="/login">Login/Signup</Login>
+          )}
+        </MediaQuery>
+        <MediaQuery maxWidth={1000}>
+          {!isClicked ? (
+            <StyledBars
+              onClick={() => {
+                setIsClicked(!isClicked);
+                document.body.style.overflow = "hidden";
+                document.body.style.height = "100vh";
+              }}
+            />
+          ) : (
+            <StyledX
+              onClick={() => {
+                setIsClicked(!isClicked);
+                document.body.style.overflow = "";
+              }}
+            />
+          )}
+        </MediaQuery>
       </NavbarContainer>
+      <SideBar show={isClicked} setIsClicked={setIsClicked} />
     </Main>
   );
 };
@@ -126,6 +155,21 @@ const Login = styled(Link)`
   font-family: "Poppins", sans-serif;
   text-decoration: none;
   color: white;
+`;
+
+const StyledBars = styled(FaBars)`
+  font-size: 2rem;
+  z-index: 100;
+  @media (max-width: 460px) {
+    font-size: 1.5rem;
+  }
+`;
+const StyledX = styled(FaXmark)`
+  font-size: 2rem;
+  z-index: 100;
+  @media (max-width: 460px) {
+    font-size: 1.5rem;
+  }
 `;
 const Arrow = styled.span`
   color: white;
@@ -140,16 +184,23 @@ const Search = styled.div`
 `;
 const Main = styled.div`
   width: 100%;
-  background-color: black;
+  background-color: #000;
   display: flex;
   height: fit-content;
   justify-content: center;
-  align-items: center;
+  @media (max-width: 460px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 const StyledMagni = styled(FaMagnifyingGlass)`
   width: 2rem;
   height: 2rem;
   color: white;
+  @media (max-width: 460px) {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
 `;
 const CartNav = styled.div`
   display: flex;
@@ -205,14 +256,17 @@ const Popover = styled.div`
 `;
 
 const NavbarContainer = styled.nav`
-  background-color: black;
+  background-color: #000;
   color: white;
   display: flex;
-  height: 2rem;
-  width: 1650px;
+  height: fit-content;
+  width: 90%;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
+  @media (max-width: 460px) {
+    width: 100%;
+    justify-content: space-evenly;
+  }
 `;
 
 const Logo = styled(Link)`
@@ -221,6 +275,29 @@ const Logo = styled(Link)`
   font-weight: bold;
   width: fit-content;
   text-decoration: none;
+  @media (max-width: 600px) {
+    font-size: 1.6rem;
+  }
+  @media (max-width: 460px) {
+    display: none;
+  }
+`;
+const LogoSmall = styled(Link)`
+  color: white;
+  font-size: 2.6rem;
+  font-weight: bold;
+  width: fit-content;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  @media (max-width: 600px) {
+    font-size: 1.6rem;
+  }
+  @media (max-width: 4460px) {
+    font-size: 1.2rem;
+    background-color: #101010;
+  }
 `;
 
 const SearchContainer = styled.div`
@@ -231,7 +308,11 @@ const SearchContainer = styled.div`
   background-color: white;
   border-radius: 18px;
   padding: 0.5rem;
-  margin: 1rem;
+  margin: 0.5rem;
+  @media (max-width: 460px) {
+    height: 1.5rem;
+    border-radius: 10px;
+  }
 `;
 
 const SearchBar = styled.input`
@@ -244,6 +325,9 @@ const SearchBar = styled.input`
 
   &:focus {
     outline: none;
+  }
+  @media (max-width: 500px) {
+    font-size: 1rem;
   }
 `;
 

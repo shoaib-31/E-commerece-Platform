@@ -10,8 +10,8 @@ export const SignUp = () => {
     name: "",
     email: "",
     phoneNumber: "",
-    gender: "Male", // Default gender
-    role: "User", // Default registration type
+    gender: "Male",
+    role: "User",
     password: "",
     confirmPassword: "",
   });
@@ -99,30 +99,24 @@ export const SignUp = () => {
           </GenderRadioContainer>
           <RoleRadioContainer>
             <RadioLabel>Register As:</RadioLabel>
-            <RadioInput
-              type="radio"
-              name="role"
-              value="User"
-              checked={formData.role === "User"}
-              onChange={handleChange}
-            />
-            <RadioLabel>User</RadioLabel>
-            <RadioInput
-              type="radio"
-              name="role"
-              value="BusinessOwner"
-              checked={formData.role === "BusinessOwner"}
-              onChange={handleChange}
-            />
-            <RadioLabel>Admin</RadioLabel>
-            <RadioInput
-              type="radio"
-              name="role"
-              value="Admin"
-              checked={formData.role === "Admin"}
-              onChange={handleChange}
-            />
-            <RadioLabel>Business Owner</RadioLabel>
+            <div>
+              <RadioInput
+                type="radio"
+                name="role"
+                value="User"
+                checked={formData.role === "User"}
+                onChange={handleChange}
+              />
+              <RadioLabel>User</RadioLabel>
+              <RadioInput
+                type="radio"
+                name="role"
+                value="BusinessOwner"
+                checked={formData.role === "BusinessOwner"}
+                onChange={handleChange}
+              />
+              <RadioLabel>Business Owner</RadioLabel>
+            </div>
           </RoleRadioContainer>
           <Input
             type="password"
@@ -159,11 +153,11 @@ const Modal = styled.div`
   z-index: 2;
   top: ${(props) => (props.show ? "4rem" : "-20rem")};
   background-color: black;
+  color: white;
   font-family: "Poppins", sans-serif;
   font-weight: 500;
   font-size: 1.5rem;
   padding: 1rem;
-  color: white;
   border-radius: 10px;
   transition-timing-function: ease-in;
   transition-duration: 1s;
@@ -176,6 +170,9 @@ const SignupContainer = styled.div`
   padding: 20px;
   width: 100%;
   height: 100vh;
+  @media (max-width: 500px) {
+    padding: 0;
+  }
 `;
 const Head = styled.div`
   font-size: 2rem;
@@ -190,6 +187,11 @@ const Box = styled.div`
   border-radius: 20px;
   background-color: white;
   border: 1px solid black;
+  @media (max-width: 500px) {
+    width: 15rem;
+    padding: 1rem;
+    border-radius: 5px;
+  }
 `;
 const SignupForm = styled.form`
   display: flex;
@@ -208,6 +210,9 @@ const Input = styled.input`
   padding: 0.5rem;
   border-radius: 5px;
   width: 100%;
+  @media (max-width: 500px) {
+    font-size: 1rem;
+  }
 `;
 
 const GenderRadioContainer = styled.div`
@@ -222,7 +227,7 @@ const RadioInput = styled.input`
 `;
 
 const RadioLabel = styled.label`
-  margin-right: 15px;
+  margin-right: 10px;
   color: black;
 `;
 
@@ -231,6 +236,7 @@ const RoleRadioContainer = styled.div`
   align-items: center;
   margin: 10px;
   width: 100%;
+  flex-wrap: wrap;
 `;
 
 const ErrorMessage = styled.div`

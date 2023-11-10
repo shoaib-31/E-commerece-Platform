@@ -233,6 +233,11 @@ const CompContainer = styled.div`
     background-color: #f2f0f0;
     border: 1px solid #000;
   }
+  @media (max-width: 1100px) {
+    height: fit-content;
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 const FormContainer = styled(Box)`
   position: absolute;
@@ -244,6 +249,13 @@ const FormContainer = styled(Box)`
   box-shadow: 24px;
   border-radius: 1rem;
   padding: 2rem;
+  @media (max-width: 1000px) {
+    width: 80%;
+  }
+  @media (max-height: 800px) {
+    height: 80%;
+    overflow-y: scroll;
+  }
 `;
 const InputBox = styled.div`
   display: flex;
@@ -262,6 +274,9 @@ const Label = styled.label`
   font-size: 1.4rem;
   font-family: "Fjalla One", sans-serif;
   margin: 5px 0;
+  @media (max-width: 450px) {
+    font-size: 1.2rem;
+  }
 `;
 const FormHead = styled.div`
   font-size: 2rem;
@@ -285,7 +300,7 @@ const StyledModal = styled(Modal)`
 
 const Info = styled(Link)`
   display: flex;
-  width: 55%;
+  width: fit-content;
   flex-wrap: wrap;
   text-decoration: none;
   justify-content: space-evenly;
@@ -297,12 +312,23 @@ const Name = styled.div`
   width: 25%;
   color: black;
   font-family: "Fjalla One", sans-serif;
+  @media (max-width: 1100px) {
+    width: 100%;
+  }
+  @media (max-width: 450px) {
+    width: 100%;
+    font-size: 1.2rem;
+  }
 `;
 const Small = styled.div`
   font-size: 17px;
   font-weight: 500;
   color: black;
   width: 18rem;
+  @media (max-width: 450px) {
+    width: 100%;
+    font-size: 12px;
+  }
 `;
 const Button = styled.button`
   width: 6rem;
@@ -318,6 +344,11 @@ const Button = styled.button`
   transition-duration: 100ms;
   &:hover {
     background-color: #222333;
+  }
+  @media (max-width: 450px) {
+    width: 5rem;
+    height: 30px;
+    border-radius: 7px;
   }
 `;
 export default ManageUserComponent;

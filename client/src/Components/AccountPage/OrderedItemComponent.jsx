@@ -149,6 +149,9 @@ const Status = styled.div`
   font-weight: 600;
   color: #53c522;
   font-family: "Poppins", sans-serif;
+  @media (max-width: 450px) {
+    font-size: 1rem;
+  }
 `;
 const Btn = styled.button`
   width: 10rem;
@@ -165,6 +168,9 @@ const Btn = styled.button`
   &:hover {
     background-color: #222333;
   }
+  @media (max-width: 450px) {
+    width: 6rem;
+  }
 `;
 
 const Third = styled.div`
@@ -172,6 +178,7 @@ const Third = styled.div`
   width: fit-content;
   height: fit-content;
   gap: 1rem;
+  flex: 2;
 `;
 const CompContainer = styled.div`
   height: 6rem;
@@ -179,6 +186,7 @@ const CompContainer = styled.div`
   align-items: center;
   padding: 0 1rem;
   gap: 1rem;
+  flex-wrap: wrap;
   justify-content: flex-start;
   border-radius: 10px;
   width: 100%;
@@ -186,6 +194,9 @@ const CompContainer = styled.div`
   &:hover {
     background-color: #f2f0f0;
     border: 1px solid #000;
+  }
+  @media (max-width: 450px) {
+    height: fit-content;
   }
 `;
 const FormContainer = styled(Box)`
@@ -198,6 +209,9 @@ const FormContainer = styled(Box)`
   box-shadow: 24px;
   border-radius: 1rem;
   padding: 2rem;
+  @media (max-width: 750px) {
+    width: 70vw;
+  }
 `;
 const InputBox = styled.div`
   display: flex;
@@ -215,6 +229,10 @@ const FormHead = styled.div`
   font-size: 2rem;
   font-family: "Fjalla One", sans-serif;
   text-align: center;
+  @media (max-width: 450px) {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
 `;
 const StyledModal = styled(Modal)`
   display: flex;
@@ -225,6 +243,9 @@ const Image = styled.img`
   height: 90%;
   border-radius: 5px;
   aspect-ratio: 1;
+  @media (max-width: 450px) {
+    width: 4rem;
+  }
 `;
 const Info = styled(Link)`
   display: flex;
@@ -234,6 +255,7 @@ const Info = styled(Link)`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: flex-start;
+  flex: 1;
 `;
 const Name = styled.div`
   font-size: 20px;

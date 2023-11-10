@@ -46,6 +46,9 @@ const Head = styled.div`
   font-size: 1.3rem;
   color: black;
   flex-direction: column;
+  @media (max-width: 450px) {
+    font-size: 1.1rem;
+  }
 `;
 const TotalQuant = styled.div`
   width: 95%;
@@ -56,6 +59,9 @@ const TotalQuant = styled.div`
   font-family: "Poppins", sans-serif;
   align-items: center;
   justify-content: space-between;
+  @media (max-width: 450px) {
+    font-size: 1rem;
+  }
 `;
 const CheckoutBtn = styled.button`
   width: 100%;
@@ -73,6 +79,9 @@ const CheckoutBtn = styled.button`
   &:hover {
     background-color: #333333;
     cursor: pointer;
+  }
+  @media (max-width: 450px) {
+    font-size: 1.2rem;
   }
 `;
 export default Checkout;

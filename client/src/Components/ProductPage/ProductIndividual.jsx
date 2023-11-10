@@ -18,9 +18,8 @@ function ProductIndividual() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Make a GET request with Axios
     axios
-      .get(`${url}/products/${productId}`) // Replace with your API endpoint and parameter
+      .get(`${url}/products/${productId}`)
       .then((response) => {
         setProductData(response.data);
         setLoading(false);
@@ -106,10 +105,16 @@ const Container = styled.div`
   align-items: center;
   justify-content: space-evenly;
   padding: 1rem;
+  @media (max-width: 750px) {
+    flex-direction: column;
+  }
 `;
 const ImgContainer = styled.div`
   width: 40%;
   height: 80%;
+  @media (max-width: 750px) {
+    width: 90%;
+  }
 `;
 const Image = styled.img`
   width: 90%;
@@ -125,6 +130,9 @@ const InfoContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   color: black;
+  @media (max-width: 750px) {
+    width: 90%;
+  }
 `;
 const Company = styled.div`
   font-size: 1rem;
@@ -137,12 +145,18 @@ const Title = styled.div`
   font-size: 3rem;
   margin: 1rem 0;
   font-family: "Fjalla One", sans-serif;
+  @media (max-width: 750px) {
+    font-size: 2rem;
+  }
 `;
 const Description = styled.div`
   font-size: 1rem;
   font-family: "Poppins", sans-serif;
   width: 70%;
   font-weight: 300;
+  @media (max-width: 750px) {
+    width: 90%;
+  }
 `;
 const PriceContainer = styled.div`
   width: 100%;
@@ -158,6 +172,9 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 1rem 0;
+  @media (max-width: 750px) {
+    width: 100%;
+  }
 `;
 const Button = styled.button`
   width: 40%;

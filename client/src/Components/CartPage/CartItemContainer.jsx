@@ -48,6 +48,10 @@ const Container = styled.div`
     background-color: lightgray;
     border-radius: 10px;
   }
+  @media (max-width: 750px) {
+    width: 90%;
+    height: fit-content;
+  }
 `;
 
 export default CartItemContainer;

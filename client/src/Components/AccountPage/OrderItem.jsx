@@ -66,6 +66,11 @@ const Button = styled.button`
   &:hover {
     background-color: #222333;
   }
+  @media (max-width: 450px) {
+    width: 6rem;
+    height: 2.5rem;
+    margin-bottom: 2px;
+  }
 `;
 const Container = styled.div`
   width: 100%;
@@ -77,6 +82,10 @@ const Container = styled.div`
   border: 1px solid transparent;
   background-color: #f4f3f3;
   border: 1px solid #000;
+  @media (max-width: 450px) {
+    flex-wrap: wrap;
+    height: fit-content;
+  }
 `;
 const Quantity = styled.div`
   width: 10%;
@@ -86,6 +95,9 @@ const Quantity = styled.div`
   font-weight: 500;
   align-items: flex-end;
   font-family: "Poppins", sans-serif;
+  @media (max-width: 450px) {
+    font-size: 0.9rem;
+  }
 `;
 const Mid = styled.div`
   width: 50%;
@@ -101,15 +113,24 @@ const Name = styled.div`
   height: fit-content;
   color: #000;
   font-family: "Fjalla One", sans-serif;
+  @media (max-width: 450px) {
+    font-size: 1rem;
+  }
 `;
 const Status = styled.div`
   font-size: 1.2rem;
   font-weight: 600;
   color: #53c522;
   font-family: "Poppins", sans-serif;
+  @media (max-width: 450px) {
+    font-size: 1rem;
+  }
 `;
 const Image = styled.img`
   height: 90%;
   aspect-ratio: 1;
+  @media (max-width: 450px) {
+    height: 4rem;
+  }
 `;
 export default OrderItem;

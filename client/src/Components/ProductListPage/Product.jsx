@@ -56,6 +56,7 @@ const CompContainer = styled.div`
   align-items: center;
   justify-content: space-evenly;
   border-radius: 10px;
+  gap: 5px;
   border: 1px solid transparent;
   &:hover {
     background-color: #f2f0f0;
@@ -66,6 +67,9 @@ const Image = styled.img`
   height: 90%;
   border-radius: 5px;
   aspect-ratio: 1;
+  @media (max-width: 450px) {
+    height: 75%;
+  }
 `;
 const Info = styled(Link)`
   display: flex;
@@ -81,11 +85,17 @@ const Name = styled.div`
   font-weight: 600;
   color: black;
   font-family: "Fjalla One", sans-serif;
+  @media (max-width: 450px) {
+    font-size: 15px;
+  }
 `;
 const Cost = styled.div`
   font-size: 17px;
   font-weight: 500;
   color: black;
+  @media (max-width: 450px) {
+    font-size: 12px;
+  }
 `;
 const Button = styled.button`
   width: 100%;
@@ -101,6 +111,10 @@ const Button = styled.button`
   transition-duration: 100ms;
   &:hover {
     background-color: #222333;
+  }
+  @media (max-width: 450px) {
+    font-size: 10px;
+    padding: 0 0.5rem;
   }
 `;
 export default Product;

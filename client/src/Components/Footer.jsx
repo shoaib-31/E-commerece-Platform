@@ -40,14 +40,15 @@ const Footer = () => {
 };
 
 const FooterContainer = styled.footer`
-  background-color: #000;
-  padding: 2rem;
+  background-color: #000000;
   color: #e6e6e6;
+  padding: 1rem;
 `;
 const StyledFb = styled(FaFacebook)`
   color: #fff;
   width: 2rem;
   height: 2rem;
+
   &:hover {
     color: #1877f2;
   }
@@ -84,11 +85,17 @@ const Logo = styled.h2`
   font-size: 1.8rem;
   color: #e6e6e6;
   margin-bottom: 0.5rem;
+  @media (max-width: 450px) {
+    font-size: 1.5rem;
+  }
 `;
 
 const Slogan = styled.p`
   font-size: 0.9rem;
   color: #e6e6e6;
+  @media (max-width: 450px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const LinksContainer = styled.div`
@@ -99,6 +106,9 @@ const FooterHeading = styled.h3`
   font-size: 1rem;
   color: #e6e6e6;
   margin-bottom: 1rem;
+  @media (max-width: 450px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const FooterLink = styled.a`
@@ -109,6 +119,9 @@ const FooterLink = styled.a`
   text-decoration: none;
   &:hover {
     color: #ff6b6b;
+  }
+  @media (max-width: 450px) {
+    font-size: 0.8rem;
   }
 `;
 
@@ -129,7 +142,6 @@ const SocialIcon = styled.img`
 const FooterBottom = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding-top: 1rem;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -142,6 +154,9 @@ const Copyright = styled.p`
   color: #e6e6e6;
   margin-bottom: 1rem;
   width: 40%;
+  @media (max-width: 450px) {
+    width: 100%;
+  }
 `;
 
 const TermsLink = styled.a`
@@ -151,6 +166,9 @@ const TermsLink = styled.a`
   width: 31%;
   &:hover {
     color: #ff6b6b;
+  }
+  @media (max-width: 450px) {
+    width: 50%;
   }
 `;
 

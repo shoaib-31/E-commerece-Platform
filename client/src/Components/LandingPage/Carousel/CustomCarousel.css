@@ -21,8 +21,5 @@
 .slick-slide {
   transition-timing-function: ease-in;
   transition-duration: 0.3s;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 15rem;
+  height: fit-content;
 }

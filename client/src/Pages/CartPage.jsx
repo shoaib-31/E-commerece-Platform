@@ -26,6 +26,10 @@ const Container = styled.div`
   padding: 1rem;
   justify-content: center;
   gap: 2rem;
+  @media (max-width: 750px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 const Right = styled.div`
   display: flex;
@@ -35,6 +39,9 @@ const Right = styled.div`
   justify-content: center;
   height: fit-content;
   width: 25%;
+  @media (max-width: 750px) {
+    width: 90%;
+  }
 `;
 const Button = styled.button`
   width: 100%;

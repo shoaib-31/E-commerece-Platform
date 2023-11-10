@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 function Categories() {
   return (
     <Container>
-      <Heading>Categories</Heading>
+      <Heading>Shop By Category</Heading>
       <hr style={{ backgroundColor: "black", width: "98%", height: "1px" }} />
       <CategoriesBox>
         {CategoriesData.map((category) => {
@@ -43,6 +43,7 @@ const CategoryName = styled.span`
   margin: 0.5rem 0rem;
   font-weight: 600;
   font-size: 1.2rem;
+  font-family: "Poppins", sans-serif;
   &:hover {
     text-decoration: underline;
   }
@@ -51,18 +52,20 @@ const CategoryImg = styled.img`
   width: 17rem;
   height: 17rem;
   border-radius: 10px;
+  @media (max-width: 550px) {
+    width: 14rem;
+    height: 14rem;
+  }
 `;
 const Container = styled.div`
-  max-width: 1700px;
-  width: 100%;
+  width: 90%;
   height: fit-content;
   background-color: white;
-  margin-top: 1rem;
+  margin: 1rem 0;
   display: flex;
+  border-radius: 20px;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  padding: 1rem;
 `;
 const CategoriesBox = styled.div`
   display: flex;
@@ -70,11 +73,26 @@ const CategoriesBox = styled.div`
   width: 85%;
   flex-wrap: wrap;
   justify-content: space-between;
+  @media (max-width: 800px) {
+    width: 100%;
+  }
+  @media (max-width: 650px) {
+    justify-content: center;
+    width: 100%;
+  }
 `;
 const Heading = styled.div`
   width: 98%;
-  font-size: 1.5rem;
+  font-size: 2rem;
+  font-weight: 500;
+  margin-top: 1rem;
+  font-family: "Poppins", sans-serif;
   color: black;
+  @media (max-width: 550px) {
+    display: flex;
+    justify-content: center;
+    font-size: 1.5rem;
+  }
 `;
 
 export default Categories;

@@ -213,6 +213,7 @@ const Third = styled.div`
   width: fit-content;
   height: fit-content;
   gap: 1rem;
+  flex: 2;
 `;
 const CompContainer = styled.div`
   height: 6rem;
@@ -227,6 +228,10 @@ const CompContainer = styled.div`
     background-color: #f2f0f0;
     border: 1px solid #000;
   }
+  @media (max-width: 550px) {
+    height: fit-content;
+    flex-wrap: wrap;
+  }
 `;
 const FormContainer = styled(Box)`
   position: absolute;
@@ -238,6 +243,13 @@ const FormContainer = styled(Box)`
   box-shadow: 24px;
   border-radius: 1rem;
   padding: 2rem;
+  @media (max-width: 1000px) {
+    width: 80%;
+  }
+  @media (max-height: 800px) {
+    height: 80%;
+    overflow-y: scroll;
+  }
 `;
 const InputBox = styled.div`
   display: flex;
@@ -256,6 +268,9 @@ const Label = styled.label`
   font-size: 1.4rem;
   font-family: "Fjalla One", sans-serif;
   margin: 5px 0;
+  @media (max-width: 450px) {
+    font-size: 1.2rem;
+  }
 `;
 const FormHead = styled.div`
   font-size: 2rem;
@@ -290,12 +305,16 @@ const Image = styled.img`
   height: 90%;
   border-radius: 5px;
   aspect-ratio: 1;
+  @media (max-width: 550px) {
+    height: 5rem;
+  }
 `;
 const Info = styled(Link)`
   display: flex;
   width: 70%;
-  height: 55%;
+  height: fit-content;
   text-decoration: none;
+  flex: 1;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: flex-start;

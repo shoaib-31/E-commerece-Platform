@@ -92,6 +92,10 @@ const Container = styled.div`
   height: fit-content;
   justify-content: center;
   gap: 1rem;
+  @media (max-width: 750px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 const List = styled.div`
   display: flex;
@@ -101,6 +105,14 @@ const List = styled.div`
   width: 15%;
   background-color: white;
   border-radius: 10px;
+  @media (max-width: 750px) {
+    flex-direction: row;
+    width: 90%;
+    overflow-x: auto;
+    margin: 0 3px;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
 `;
 const Item = styled.div`
   display: flex;
@@ -124,5 +136,8 @@ const Options = styled.div`
   background-color: white;
   border-radius: 10px;
   padding: 1rem;
+  @media (max-width: 750px) {
+    width: 90%;
+  }
 `;
 export default AccountPage;

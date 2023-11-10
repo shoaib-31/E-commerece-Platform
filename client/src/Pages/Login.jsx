@@ -97,6 +97,9 @@ const Head = styled.div`
   text-align: center;
   margin: 1rem;
   font-family: "Courier New", Courier, monospace;
+  @media (max-width: 500px) {
+    font-size: 1.5rem;
+  }
 `;
 const Register = styled(Link)`
   font-size: 0.8rem;
@@ -110,6 +113,11 @@ const Box = styled.div`
   border-radius: 20px;
   background-color: white;
   border: 1px solid black;
+  width: 20rem;
+  @media (max-width: 500px) {
+    padding: 1rem;
+    width: 16rem;
+  }
 `;
 const FormContainer = styled.div`
   display: flex;
@@ -133,6 +141,10 @@ const Input = styled.input`
   border: 1px solid gray;
   padding: 1rem;
   border-radius: 5px;
+  @media (max-width: 500px) {
+    font-size: 1rem;
+    height: 1rem;
+  }
 `;
 
 const Button = styled.button`

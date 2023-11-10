@@ -59,6 +59,10 @@ const Products = styled.div`
   margin: 1rem 0;
   padding: 1rem;
   background-color: white;
+  overflow-y: scroll;
   border-radius: 10px;
+  @media (max-width: 750px) {
+    width: 90%;
+  }
 `;
 export default SearchPage;

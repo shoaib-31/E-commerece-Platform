@@ -44,6 +44,7 @@ const CompContainer = styled.div`
   align-items: center;
   justify-content: space-evenly;
   border-radius: 10px;
+  gap: 5px;
   border: 1px solid transparent;
   &:hover {
     background-color: #f2f0f0;
@@ -54,6 +55,9 @@ const Image = styled.img`
   height: 90%;
   border-radius: 5px;
   aspect-ratio: 1;
+  @media (max-width: 750px) {
+    height: 5rem;
+  }
 `;
 const Info = styled.div`
   display: flex;
@@ -67,6 +71,9 @@ const Name = styled.div`
   font-weight: 600;
   color: black;
   font-family: "Fjalla One", sans-serif;
+  @media (max-width: 450px) {
+    font-size: 15px;
+  }
 `;
 const Price = styled.div`
   font-size: 17px;
@@ -78,6 +85,9 @@ const QuantityContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media (max-width: 450px) {
+    width: 6rem;
+  }
 `;
 const AlterQuantity = styled.button`
   width: 30px;
