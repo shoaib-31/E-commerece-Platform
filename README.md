@@ -10,4 +10,4 @@
 
 ## About this project
 
-This project is a E-commerce Platform which be used to buy and sell products where users can both become a simple customer or a Business Owner who can add his products. It has been build using MERN stack technology with redux toolkit for state management of the application. Also there is a admin role where a user can signup as a Admin and then he/she can manage users and products on the webapp.
+This project is a E-commerce Platform which be used to buy and sell products where users can both become a simple customer or a Business Owner who can add his products. It has been build using MERN stack technology with redux toolkit for state management of the application.
