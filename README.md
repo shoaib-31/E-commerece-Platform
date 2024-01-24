@@ -4,7 +4,7 @@
 
 - First Cone the project.
 - After Cloning the project, firstly `npm install` in both client and server.
-- Then, in the server make a **.env** file with variables `PORT=8000`, `MONGODB_URI="your mongodb uri"`, `JWT-SECRET="your jwt secret"` and finally `STRIPE_KEY="your stripe private key'`.
+- Then, in the server make a **.env** file with variables `PORT=8000`, `MONGODB_URI="your mongodb uri"`, `JWT_SECRET="your jwt secret"` and finally `STRIPE_KEY="your stripe private key'`.
 - Then in client/clientconfig.jsx set `url:"http://localhost:8000"` and `stripePublic:"your stripe public key"`.
 - Then, go to the terminal and then go the directory client and run `npm run dev` and then open a different terminal and then go the the directory server and run `nodemon server.js` or `node server.js`.
 
